@@ -1,5 +1,11 @@
-export default function decorate (block) {
-children.slice(0, 6).forEach((el) => {
-  el.classList.add('card', 'wheat-strategy');
-});
+export default function decorate(block) {
+  if (!block) return;
+
+  const children = block.querySelectorAll(':scope > div');
+
+  children.forEach((el, index) => {
+    if (index < 6) {
+      el.classList.add('card', 'wheat-strategy');
+    }
+  });
 }
