@@ -16,7 +16,6 @@
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(128, 128, 128, 0.4);
 }
-}
 
 .wheat-strategy:hover {
     background-color: #4caf50;  /* Green on hover */
