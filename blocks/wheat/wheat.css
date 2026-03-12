@@ -1,4 +1,4 @@
-.container {
+.wheat block {
     display: grid;
     grid-template-columns: repeat(auto-fit, 300px); /* fixed 300px width */
     gap: 20px;                  /* space between items */
