@@ -1,7 +1,6 @@
 .container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;                  /* spacing between items */
+                /* spacing between items */
     justify-content: center;    /* center the grid */
 }
 
@@ -11,7 +10,6 @@
     max-width: 300px;           /* ensures consistent card size */
     text-align: center;
     border: 2px solid grey;     /* Grey border */
-    border-radius: 10px;        /* Rounded corners */
     padding: 20px;
     box-sizing: border-box;     /* avoids overflow */
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
