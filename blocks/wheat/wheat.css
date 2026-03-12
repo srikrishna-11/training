@@ -2,8 +2,9 @@
     background-color:red;
 }
 .wheat-strategy{
-    background-color:red;
+    background-color:#a2a84c;
     width:250px;
     text-align:center;
+    display:flex;
 
 }
