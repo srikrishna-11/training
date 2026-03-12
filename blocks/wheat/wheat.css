@@ -2,9 +2,6 @@
  
     justify-content: center;    /* center the grid */
 }
-h1{
-    text-align:center;
-}
 
 .wheat-strategy {
     background-color: #ffffff;
@@ -27,4 +24,6 @@ h1{
     .lazy{
     background-color:#4caf50;
  }
+h1{
+    text-align:center;
 }
