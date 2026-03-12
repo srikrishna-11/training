@@ -1,18 +1,19 @@
-.wheat block {
+.container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 300px); /* fixed 300px width */
-    gap: 20px;                  /* space between items */
-    justify-content: center;    /* center the whole grid */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;                  /* spacing between items */
+    justify-content: center;    /* center the grid */
 }
 
 .wheat-strategy {
     background-color: #ffffff;  /* White background */
-    width: 300px;               /* fixed width */
+    width: 100%;                /* fills its grid cell */
+    max-width: 300px;           /* ensures consistent card size */
     text-align: center;
     border: 2px solid grey;     /* Grey border */
     border-radius: 10px;        /* Rounded corners */
-    padding: 20px;              /* Inner spacing */
-    box-sizing: border-box;     /* include padding/border in width */
+    padding: 20px;
+    box-sizing: border-box;     /* avoids overflow */
     transition: background-color 0.3s ease;
 }
 
