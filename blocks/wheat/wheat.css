@@ -9,7 +9,6 @@
     width: 100%;                /* fills its grid cell */
     max-width: 300px;           /* ensures consistent card size */
     text-align: center;
-    border: 2px solid grey;     /* Grey border */
     padding: 20px;
     box-sizing: border-box;     /* avoids overflow */
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
