@@ -2,7 +2,9 @@
  
     justify-content: center;    /* center the grid */
 }
-
+h1{
+    text-align:center;
+}
 .wheat-strategy {
     background-color: #ffffff;
     width: 100%;
