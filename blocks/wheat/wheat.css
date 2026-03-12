@@ -17,7 +17,8 @@
 }
 
 .wheat-strategy:hover {
-    background-color: #4caf50;  /* Green on hover */
-    color: #ffffff;             /* Text turns white */
-    box-shadow: 0 6px 12px rgba(128, 128, 128, 0.6); /* deeper shadow on hover */
+    background-color: #4caf50;  
+    color: #ffffff;             
+    transform: translateY(-5px); /* lifts the card upward */
+    box-shadow: 0 8px 12px rgba(128, 128, 128, 0.6); /* shadow appears from below */
 }
