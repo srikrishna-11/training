@@ -5,6 +5,9 @@
 h1{
     text-align:center;
 }
+.lazy{
+    background-color:#4caf50;
+}
 .wheat-strategy {
     background-color: #ffffff;
     width: 100%;
