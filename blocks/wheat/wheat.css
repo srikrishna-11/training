@@ -5,15 +5,17 @@
 }
 
 .wheat-strategy {
-    background-color: #ffffff;  /* White background */
-    width: 100%;                /* fills its grid cell */
-    max-width: 300px;           /* ensures consistent card size */
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 350px;
+    margin: 10px 40px 20px 10px;
     text-align: center;
-    display: grid;
+    float: left;
     padding: 20px;
-    box-sizing: border-box;     /* avoids overflow */
+    box-sizing: border-box;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 8px rgba(128, 128, 128, 0.4); /* grey shadow */
+    box-shadow: 0 4px 8px rgba(128, 128, 128, 0.4);
+}
 }
 
 .wheat-strategy:hover {
