@@ -1,15 +1,21 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px; /* spacing between items */
+    justify-items: center; /* center items horizontally */
+}
+
 .wheat-strategy {
     background-color: #ffffff;   /* White background */
-    width: 300px;
+    width: 100%;                 /* Fill grid cell */
     text-align: center;
-    float: left;
-    margin: 10px;               /* Adds spacing between elements */
-    border: 2px solid grey;     /* Grey border */
-    border-radius: 10px;        /* Rounded corners */
-    transition: background-color 0.3s ease; /* Smooth hover effect */
+    border: 2px solid grey;      /* Grey border */
+    border-radius: 10px;         /* Rounded corners */
+    padding: 20px;               /* Inner spacing */
+    transition: background-color 0.3s ease;
 }
 
 .wheat-strategy:hover {
-    background-color: #4caf50;  /* Green background on hover */
-    color: #ffffff;             /* Optional: change text color to white */
+    background-color: #4caf50;   /* Green on hover */
+    color: #ffffff;              /* Optional: text turns white */
 }
