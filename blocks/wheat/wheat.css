@@ -5,9 +5,7 @@
 h1{
     text-align:center;
 }
-.lazy{
-    background-color:#4caf50;
-}
+
 .wheat-strategy {
     background-color: #ffffff;
     width: 100%;
@@ -26,4 +24,7 @@ h1{
     color: #ffffff;             
     transform: translateY(-5px); /* lifts the card upward */
     box-shadow: 0 8px 12px rgba(128, 128, 128, 0.6); /* shadow appears from below */
+    .lazy{
+    background-color:#4caf50;
+ }
 }
