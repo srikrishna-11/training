@@ -1,4 +1,4 @@
-.container {
+.card {
     display: grid;
                 /* spacing between items */
     justify-content: center;    /* center the grid */
