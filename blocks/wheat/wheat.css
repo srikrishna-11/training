@@ -1,10 +1,15 @@
-.wheat block{
-    background-color:red;
+.wheat-strategy {
+    background-color: #ffffff;   /* White background */
+    width: 250px;
+    text-align: center;
+    float: left;
+    margin: 10px;               /* Adds spacing between elements */
+    border: 2px solid grey;     /* Grey border */
+    border-radius: 10px;        /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
 }
-.wheat-strategy{
-    background-color:#a2a84c;
-    width:250px;
-    text-align:center;
-    float:left;
 
+.wheat-strategy:hover {
+    background-color: #4caf50;  /* Green background on hover */
+    color: #ffffff;             /* Optional: change text color to white */
 }
