@@ -7,7 +7,7 @@
 
 .wheat-strategy {
     background-color: #ffffff;   /* White background */
-    width: 100%;                 /* Fill grid cell */
+    width: 40%;                 /* Fill grid cell */
     text-align: center;
     border: 2px solid grey;      /* Grey border */
     border-radius: 10px;         /* Rounded corners */
