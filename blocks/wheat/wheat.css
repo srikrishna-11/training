@@ -1,6 +1,10 @@
 .card {
  
-    justify-content: center;    /* center the grid */
+    justify-content: center;
+    h3{
+    text-align:center;
+    font-size: 25px;
+}
 }
 
 .wheat-strategy {
