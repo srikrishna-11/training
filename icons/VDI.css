@@ -1,1 +1,150 @@
+dd.readonly_fields { display: none; }
+dt { margin: 0 0 16px 41px; }
+.calendarData { position: relative; display: inline-block; }
+.form-control { border-radius: 4px; border: 1px solid #ccc; padding: 8px 32px 8px 8px; font-size: 14px; width: 150px; box-sizing: border-box; }
+.form-control:focus { outline: 2px solid blue; outline-offset: 2px; }
+.calendaricon { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 16px; color: #666; pointer-events: auto; z-index: 10; }
+.calendaricon:hover { color: #000; }
+#datepicker-popup { position: absolute; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000; display: none; width: 250px; padding: 10px; }
+.datepicker-header { display: flex; justify-content: center; gap: 10px; margin-bottom: 10px; }
+.datepicker-month, .datepicker-year { padding: 5px; border: 1px solid #ccc; border-radius: 4px; }
+.datepicker-weekdays { display: grid; grid-template-columns: repeat(7,1fr); text-align: center; font-weight: bold; margin-bottom: 5px; }
+.datepicker-days { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
+.datepicker-day { text-align: center; padding: 8px; cursor: pointer; border-radius: 4px; }
+.datepicker-day:hover { background-color: #f0f0f0; }
+.datepicker-day.selected { background-color: orange; color: white; }
+.datepicker-day.other-month { color: #ccc; }
+.datepicker-day.today { border: 1px solid blue; }
+.warning-message { color: #b71c1c; background-color: #ffebee; border: 1px solid #ef5350; padding: 8px 10px; margin-top: 10px; border-radius: 4px; font-size: 13px; text-align: center; }
 
+/* Warning message styles */
+.warning-message {
+    color: #b71c1c;
+    background-color: #ffebee;
+    border: 1px solid #ef5350;
+    padding: 8px 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    text-align: center;
+}
+
+------JS-------
+
+document.addEventListener('DOMContentLoaded', () => {
+  const rdd = document.querySelector('dd.readonly_fields');
+  const inp = document.getElementById('birthDate');
+  const ico = document.querySelector('.calendaricon');
+  const cal = document.querySelector('.calendarData');
+  const pop = document.createElement('div');
+  
+  inp.value = rdd.textContent.trim();
+  rdd.style.display = 'none';
+  pop.id = 'datepicker-popup';
+  pop.setAttribute('role', 'dialog');
+  pop.setAttribute('aria-modal', 'true');
+  document.body.appendChild(pop);
+
+  let curr = new Date();
+
+  const prs = str => {
+    const p = str.split('/');
+    return p.length === 3 ? new Date(p[2], p[0] - 1, p[1]) : null;
+  };
+
+  const fmt = d => {
+    const m = (d.getMonth() + 1).toString().padStart(2, '0');
+    const dy = d.getDate().toString().padStart(2, '0');
+    return `${m}/${dy}/${d.getFullYear()}`;
+  };
+
+  const cls = () => pop.style.display = 'none';
+
+  const rnd = date => {
+    const y = date.getFullYear(), m = date.getMonth();
+    const f = new Date(y, m, 1), l = new Date(y, m + 1, 0);
+    const s = new Date(f), e = new Date(l);
+    s.setDate(s.getDate() - f.getDay());
+    e.setDate(e.getDate() + (6 - l.getDay()));
+
+    const sel = prs(inp.value);
+    const mo = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const mopt = mo.map((n, i) => `<option value="${i}" ${i === m ? 'selected' : ''}>${n}</option>`).join('');
+    const yopt = Array.from({length: 131}, (_, i) => 1900 + i).map(yr => `<option value="${yr}" ${yr === y ? 'selected' : ''}>${yr}</option>`).join('');
+
+    pop.innerHTML = `<div class="datepicker-header"><select class="datepicker-month">${mopt}</select><select class="datepicker-year">${yopt}</select></div><div class="datepicker-weekdays"><div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div></div><div class="datepicker-days"></div><div class="warning-message" style="display: none;"></div>`;
+
+    const dc = pop.querySelector('.datepicker-days');
+    let c = new Date(s);
+    while (c <= e) {
+      const dv = document.createElement('div');
+      dv.className = 'datepicker-day';
+      dv.textContent = c.getDate();
+      dv.setAttribute('data-date', fmt(c));
+      if (c.getMonth() !== m) dv.classList.add('other-month');
+      if (sel && c.toDateString() === sel.toDateString()) dv.classList.add('selected');
+      if (new Date().toDateString() === c.toDateString()) dv.classList.add('today');
+      dv.addEventListener('click', function() {
+        const sd = prs(this.getAttribute('data-date'));
+        const wm = pop.querySelector('.warning-message');
+        if (sd > new Date()) {
+          wm.textContent = "Birth date cannot be in the future.";
+          wm.style.display = 'block';
+          return;
+        }
+        inp.value = this.getAttribute('data-date');
+        curr = prs(inp.value);
+        cls();
+      });
+      dc.appendChild(dv);
+      c.setDate(c.getDate() + 1);
+    }
+    pop.querySelector('.datepicker-month').addEventListener('change', e => { curr.setMonth(parseInt(e.target.value)); rnd(curr); });
+    pop.querySelector('.datepicker-year').addEventListener('change', e => { curr.setFullYear(parseInt(e.target.value)); rnd(curr); });
+  };
+
+  const opn = () => {
+    const r = cal.getBoundingClientRect();
+    pop.style.left = r.left + 'px';
+    pop.style.top = (r.bottom + 5) + 'px';
+    rnd(curr);
+    pop.style.display = 'block';
+    pop.focus();
+  };
+
+  inp.addEventListener('click', opn);
+  ico.addEventListener('click', opn);
+  document.addEventListener('click', e => !cal.contains(e.target) && !pop.contains(e.target) && cls());
+  pop.addEventListener('keydown', e => e.key === 'Escape' && cls());
+});
+
+
+                                                          -------------HTML---------------
+
+
+                                                                                                  <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="custom.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <dl>
+        <dt>Birth Date</dt>
+        <dd class="readonly_fields">10/01/1957</dd>
+        <dd class="calendarData editable fields">
+            <input type="text" class="form-control datepicker dp-small" id="birthDate" placeholder="MM/DD/YYYY">
+           <i class="fa-regular fa-calendar calendaricon"></i>
+
+        </dd>
+        <script src="custom.js"></script>
+</body>
+
+</html>
+                                                                                                  
