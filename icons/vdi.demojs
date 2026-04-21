@@ -142,12 +142,36 @@ $(document).ready(function () {
     }
   });
 
-  // SELECT fields
+  // SELECT fields — generic live clear
   $('select.mandatory_editableFields').on('change', function () {
     let val = $(this).val();
     if (val && val !== "Select") {
       $(this).removeClass('warningBorder');
       $(this).closest('.field-container').find('.warning_text').hide();
+    }
+  });
+
+  // City — show error on blur when empty, clear on valid selection
+  $('#cityFulfillment').on('change blur', function () {
+    var val = $(this).val();
+    if (!val || val === '' || val === 'Select') {
+      $(this).addClass('warningBorder');
+      $('#cityFulfillment_mandatory').show();
+    } else {
+      $(this).removeClass('warningBorder');
+      $('#cityFulfillment_mandatory').hide();
+    }
+  });
+
+  // State / Province — show error on blur when empty, clear on valid selection
+  $('#stateFulfillment_field').on('change blur', function () {
+    var val = $(this).val();
+    if (!val || val === '' || val === 'Select') {
+      $(this).addClass('warningBorder');
+      $('#stateFulfillment_mandatory').show();
+    } else {
+      $(this).removeClass('warningBorder');
+      $('#stateFulfillment_mandatory').hide();
     }
   });
 
