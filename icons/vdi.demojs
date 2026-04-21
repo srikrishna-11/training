@@ -1,168 +1,124 @@
-const FulfillmentForm = (function () {
-
-  let selectedValues = [];
-  const maxSelections = 3;
+$(document).ready(function () {
 
   /* =========================
-     CONFIG
+     SAVE BUTTON VALIDATION
   ========================== */
-  const selectors = {
-    form: '#fulfillment_content',
-    saveBtn: '.save_btn_fulfillment',
-    inputs: 'input.mandatory_editableFields',
-    selects: 'select.mandatory_editableFields',
-    dropdownBtn: '#dropdownButton',
-    dropdownItems: '.dropdown-item',
-    dropdownError: '#fulfillment_mandatoryText'
-  };
-
-  /* =========================
-     VALIDATION FUNCTIONS
-  ========================== */
-
-  function validateInput($el) {
-    const isValid = $el.val().trim() !== "";
-    toggleError($el, isValid);
-    return isValid;
-  }
-
-  function validateSelect($el) {
-    const val = $el.val();
-    const isValid = val && val !== "Select";
-    toggleError($el, isValid);
-    return isValid;
-  }
-
-  function validateDropdown() {
-    const isValid = selectedValues.length > 0;
-
-    if (isValid) {
-      $(selectors.dropdownBtn).removeClass('warningBorder');
-      $(selectors.dropdownError).hide();
-    } else {
-      $(selectors.dropdownBtn).addClass('warningBorder');
-      $(selectors.dropdownError).show();
-    }
-
-    return isValid;
-  }
-
-  function toggleError($el, isValid) {
-    const $error = $el.siblings('.warning_text');
-
-    if (isValid) {
-      $el.removeClass('warningBorder');
-      $error.hide();
-    } else {
-      $el.addClass('warningBorder');
-      $error.show();
-    }
-  }
-
-  /* =========================
-     MAIN VALIDATION
-  ========================== */
-  function validateForm() {
+  $('.save_btn_fulfillment').on('click', function (e) {
     let isValid = true;
 
-    $(selectors.inputs).each(function () {
-      if (!validateInput($(this))) isValid = false;
+    // Reset all errors
+    $('.warningBorder').removeClass('warningBorder');
+    $('.warning_text').hide();
+
+    // Validate INPUT fields
+    $('input.mandatory_editableFields').each(function () {
+      if ($(this).val().trim() === "") {
+        $(this).addClass('warningBorder');
+        $(this).siblings('.warning_text').show();
+        isValid = false;
+      }
     });
 
-    $(selectors.selects).each(function () {
-      if (!validateSelect($(this))) isValid = false;
+    // Validate SELECT fields
+    $('select.mandatory_editableFields').each(function () {
+      let val = $(this).val();
+      if (!val || val === "Select") {
+        $(this).addClass('warningBorder');
+        $(this).closest('.field-container').find('.warning_text').show();
+        isValid = false;
+      }
     });
 
-    if (!validateDropdown()) isValid = false;
-
-    return isValid;
-  }
-
-  /* =========================
-     DROPDOWN LOGIC
-  ========================== */
-  function renderDropdown() {
-    const $container = $(selectors.dropdownBtn).find('.selected-container');
-
-    if (selectedValues.length > 0) {
-      $container.html(selectedValues.map(v => `
-        <span class="selected-item">
-          ${v} <span class="remove-icon" data-value="${v}">X</span>
-        </span>
-      `).join(""));
-
-      validateDropdown(); // remove error when valid
-
-    } else {
-      $container.text("Select");
+    // Validate CUSTOM DROPDOWN
+    if (selectedValues.length === 0) {
+      $('#dropdownButton').addClass('warningBorder');
+      $('#fulfillment_mandatoryText').show();
+      isValid = false;
     }
-  }
 
-  function bindDropdownEvents() {
-    $(document).on('click', selectors.dropdownItems, function (e) {
-      e.preventDefault();
-      const value = $(this).data('value');
+    if (!isValid) e.preventDefault();
+  });
 
-      if (!selectedValues.includes(value)) {
-        if (selectedValues.length < maxSelections) {
-          selectedValues.push(value);
-        }
-      } else {
-        selectedValues = selectedValues.filter(v => v !== value);
-      }
-
-      renderDropdown();
-    });
-
-    $(document).on('click', '.remove-icon', function (e) {
-      e.stopPropagation();
-      const value = $(this).data('value');
-      selectedValues = selectedValues.filter(v => v !== value);
-      renderDropdown();
-    });
-  }
 
   /* =========================
-     EVENT BINDINGS
+     LIVE VALIDATION (REMOVE ERROR)
   ========================== */
-  function bindEvents() {
 
-    // Save button
-    $(selectors.saveBtn).on('click', function (e) {
-      if (!validateForm()) {
-        e.preventDefault();
-      }
-    });
+  // INPUT fields
+  $('input.mandatory_editableFields').on('input', function () {
+    if ($(this).val().trim() !== "") {
+      $(this).removeClass('warningBorder');
+      $(this).siblings('.warning_text').hide();
+    }
+  });
 
-    // Live validation (INPUT)
-    $(document).on('input', selectors.inputs, function () {
-      validateInput($(this));
-    });
+  // SELECT fields
+  $('select.mandatory_editableFields').on('change', function () {
+    let val = $(this).val();
+    if (val && val !== "Select") {
+      $(this).removeClass('warningBorder');
+      $(this).closest('.field-container').find('.warning_text').hide();
+    }
+  });
 
-    // Live validation (SELECT)
-    $(document).on('change', selectors.selects, function () {
-      validateSelect($(this));
-    });
-  }
-
-  /* =========================
-     INIT
-  ========================== */
-  function init() {
-    bindEvents();
-    bindDropdownEvents();
-  }
-
-  return {
-    init
-  };
-
-})();
+});
 
 
 /* =========================
-   INITIALIZE
+   CUSTOM DROPDOWN LOGIC
 ========================= */
-$(document).ready(function () {
-  FulfillmentForm.init();
+const dropdownButton = document.getElementById("dropdownButton");
+const selectedContainer = dropdownButton.querySelector(".selected-container");
+const items = document.querySelectorAll(".dropdown-item");
+
+let selectedValues = [];
+const maxSelections = 3;
+
+function renderSelected() {
+  if (selectedValues.length > 0) {
+    selectedContainer.innerHTML = selectedValues.map(v => `
+      <span class="selected-item">
+        ${v} <span class="remove-icon" data-value="${v}">X</span>
+      </span>
+    `).join("");
+
+    // ✅ REMOVE ERROR WHEN VALID
+    $('#dropdownButton').removeClass('warningBorder');
+    $('#fulfillment_mandatoryText').hide();
+
+  } else {
+    selectedContainer.textContent = "Select";
+  }
+
+  // Remove item
+  document.querySelectorAll(".remove-icon").forEach(icon => {
+    icon.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const value = e.target.getAttribute("data-value");
+      selectedValues = selectedValues.filter(v => v !== value);
+      renderSelected();
+    });
+  });
+}
+
+// Dropdown item click
+items.forEach(item => {
+  item.addEventListener("click", (e) => {
+    e.preventDefault();
+    const value = item.getAttribute("data-value");
+
+    if (!selectedValues.includes(value)) {
+      if (selectedValues.length < maxSelections) {
+        selectedValues.push(value);
+      }
+    } else {
+      selectedValues = selectedValues.filter(v => v !== value);
+    }
+
+    renderSelected();
+  });
 });
+
+
+
+$(this).siblings('.warning_text').show();
