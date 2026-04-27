@@ -34,4 +34,15 @@ document.querySelectorAll('.blueclose_toast, .success_close').forEach(function (
 });
  
 <div class="blueclose_toast"></div>, <div class="success_close"></div>
+
+
+document.querySelectorAll('.blueclose_toast, .success_close').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    this.closest('.toastMsg').style.display = 'none';
+  });
+});
+
+$(document).on('click', '.blueclose_toast, .success_close', function () {
+  $(this).closest('.toastMsg').hide();
+});
  
