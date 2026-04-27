@@ -34,5 +34,16 @@ document.getElementById("cancelBtn").addEventListener("click", function () {
   showToast("Fulfillment request cancelled successfully.", "success");
 });
 
+-------
+function hideToast() {
+  const toast = document.getElementById("globalToast");
+  if (toast) {
+    toast.style.display = "none";
+  }
+}
+
+----
+
+document.getElementById("toastClose").addEventListener("click", hideToast);
 // Error example
 showToast("Fulfillment cancel request failed.", "error");
