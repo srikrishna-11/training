@@ -29,3 +29,11 @@
 				</div>
 			</div>
 		</div>
+
+
+$(document).ready(function () {
+  $('#cancel_popup_add_opportunity').modal({
+    backdrop: 'static',  // prevents closing when clicking outside
+    keyboard: false      // prevents closing on ESC key
+  });
+});
