@@ -1,49 +1,28 @@
-function showToast(message, type = "success") {
-  const toast = document.getElementById("globalToast");
-  const text = document.getElementById("toastText");
-  const body = document.getElementById("toastBody");
-
-  text.innerText = message;
-
-  // reset styles
-  body.classList.remove("toast-error");
-
-  if (type === "error") {
-    body.classList.add("toast-error");
-  }
-
-  toast.style.display = "block";
-
-  // auto hide after 3 sec
-  setTimeout(() => {
-    toast.style.display = "none";
-  }, 3000);
-}
-
-// close manually
-document.getElementById("toastClose").onclick = function () {
-  document.getElementById("globalToast").style.display = "none";
-};
-// Save button
-document.getElementById("saveBtn").addEventListener("click", function () {
-  showToast("Fulfillment request added successfully.", "success");
-});
-
-// Cancel button
-document.getElementById("cancelBtn").addEventListener("click", function () {
-  showToast("Fulfillment request cancelled successfully.", "success");
-});
-
--------
-function hideToast() {
-  const toast = document.getElementById("globalToast");
-  if (toast) {
-    toast.style.display = "none";
-  }
-}
-
-----
-
-document.getElementById("toastClose").addEventListener("click", hideToast);
-// Error example
-showToast("Fulfillment cancel request failed.", "error");
+<div class="toastMsg" id="cancelledChanges_fulfillment">
+                            <div class="toast-body cancelChanges_Toast">
+                                <div class="toast_bluecaution"></div>
+                                <p class="toastMsg-cancelChanges">Fulfillment request cancelled successfully.
+                                </p>
+                                <div class="blueclose_toast"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="toastMsg" id="fail_toastmsg_fulfillment">
+                            <div class="toast-body ">
+                                <div class="toast_cautionIcon"></div>
+                                <div class="cautionMsg">
+                                <p class="toastMsg-error">Fulfillment cancel request failed.</p>
+                                </div>
+                                 <div class="blueclose_toast"></div>
+                            </div>
+                        </div>
+                        <div class="toastMsg" id="success_toastmsg_fulfillment">
+                            <div class="toast-body successToast">
+                                <div class="toast_successIcon"></div>
+                                <p class="toastMsg-success">Fulfillment request added successfully.</p>
+                                <div class="success_close"></div>
+                            </div>
+                        </div>
+ 
+<div class="blueclose_toast"></div>, <div class="success_close"></div>
+ 
