@@ -1,55 +1,31 @@
-<button class="popup-cancel" id="cancelBtn">Cancel</button>
-
-    <div class="popup-overlay" id="popup">
-        <div class="popup-box">
-            <p>Are you sure you want to cancel?</p>
-            <button id="closePopup">Close</button>
-        </div>
-    </div>
-
-----
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-
-.popup-box {
-  background: #fff;
-  padding: 20px;
-  border-radius: 6px;
-  min-width: 250px;
-  text-align: center;
-}
+<div class="drawer-footer">
+		<div class="form_footer btn-container">
+			<button class="btn btn-primary save_btn_fulfillment"
+				data-toggle="modal" data-target="" >Save</button>
+			<button class="btn btn-default" data-toggle="modal"
+				data-target="#cancel_popup_add_opportunity">Cancel</button>
+		</div>
+	</div>
 
 
-----
-
-
-
-const cancelBtn = document.getElementById("cancelBtn");
-const popup = document.getElementById("popup");
-const closePopup = document.getElementById("closePopup");
-
-// Show popup on cancel click
-cancelBtn.addEventListener("click", function () {
-  popup.style.display = "flex";
-});
-
-// Close manually (only via button)
-closePopup.addEventListener("click", function () {
-  popup.style.display = "none";
-});
-
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape') {
-    e.preventDefault();
-    e.stopPropagation(); // extra safety
-  }
-});
+<div class="modal popup-confirmation-msg" tabindex="-1" role="dialog"
+			id="cancel_popup_add_opportunity" aria-hidden="true">
+			<div class="popup-bg"></div>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header popup-header">
+						<h2>Cancel Request</h2>
+						<span class="close-popup" data-dismiss="modal"></span>
+					</div>
+					<div class="modal-body popup-body">
+						<p>Are you sure you want to cancel? You will lose all unsaved
+							changes</p>
+					</div>
+					<div class="modal-footer popup-footer">
+						<button class="btn btn-default yesBtn"
+							id="cancelChanges_fulfillment" data-dismiss="modal">Yes</button>
+						<button class="btn btn-primary noBtn" data-dismiss="modal">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
