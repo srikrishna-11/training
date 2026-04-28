@@ -1,3 +1,23 @@
+/* Default dropdown item style */
+.dropdown-menu .dropdown-item {
+  color: black;
+  background-color: white;
+}
+
+/* Hover state */
+.dropdown-menu .dropdown-item:hover {
+  color: white;
+  background-color: blue;
+}
+
+/* Optional: when focused (keyboard navigation) */
+.dropdown-menu .dropdown-item:focus {
+  color: white;
+  background-color: blue;
+}
+
+
+
 /* Make the dropdown button flexible */
 #dropdownButton {
   min-height: 40px;
