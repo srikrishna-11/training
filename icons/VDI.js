@@ -362,10 +362,13 @@ const maxSelections = 3;
 function renderSelected() {
   if (selectedValues.length > 0) {
     selectedContainer.innerHTML = selectedValues.map(v => `
-      <span class="selected-item">
-        ${v} <span class="remove-icon" data-value="${v}">X</span>
+    <span class="selected-item">
+      ${v} 
+      <span class="remove-icon" data-value="${v}">
+        <i class="fa fa-times" aria-hidden="true"></i>
       </span>
-    `).join("");
+    </span>
+  `).join("");
 
     $('#dropdownButton').removeClass('warningBorder');
     $('#fulfillment_mandatoryText').hide();
