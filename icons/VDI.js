@@ -37,131 +37,85 @@ $(".currentAddress").hide();
 //   $(".mandatory_editableFields").addClass("warningBorder");
 //   $("#mandatoryfields_toast_fulfillment").show();  
 // })
-$(document).ready(function () {
-  $(this).siblings('.warning_text').show();
+$('.save_btn_fulfillment').on('click', function (e) {
+  let isValid = true;
 
-  /* =========================
-     SAVE BUTTON VALIDATION
-  ========================== */
-  $('.save_btn_fulfillment').on('click', function (e) {
-    let isValid = true;
+  // Reset previous validation states
+  $('.is-invalid, .is-invalid-select').removeClass('warningBorder');
+  $('.warning_text').hide();
 
-    // Reset all errors
-    $('.warningBorder').removeClass('warningBorder');
-    $('.warning_text').hide();
-
-    // Validate INPUT fields
-    $('input.mandatory_editableFields').each(function () {
-      if ($(this).val().trim() === "") {
-        $(this).addClass('warningBorder');
-        $(this).siblings('.warning_text').show();
-        isValid = false;
-      }
-    });
-
-    // Validate SELECT fields
-    $('select.mandatory_editableFields').each(function () {
-      let val = $(this).val();
-      if (!val || val === "Select") {
-        $(this).addClass('warningBorder');
-        $(this).closest('.field-container').find('.warning_text').show();
-        isValid = false;
-      }
-    });
-
-    // Validate CUSTOM DROPDOWN
-    if (selectedValues.length === 0) {
-      $('#dropdownButton').addClass('warningBorder');
-      $('#fulfillment_mandatoryText').show();
+  // 1. Check Inputs (Text, Date)
+  $('.mandatory_editableFields').each(function () {
+    if ($(this).is('input') && $(this).val().trim() === "") {
+      $(this).addClass('warningBorder');
+      $(this).siblings('.warning_text').show();
       isValid = false;
     }
-
-    if (!isValid) e.preventDefault();
   });
 
-
-  /* =========================
-     LIVE VALIDATION (REMOVE ERROR)
-  ========================== */
-
-  // INPUT fields
-  $('input.mandatory_editableFields').on('input', function () {
-    if ($(this).val().trim() !== "") {
-      $(this).removeClass('warningBorder');
-      $(this).siblings('.warning_text').hide();
+  // 2. Check Bootstrap-Select Dropdowns
+  $('select.mandatory_editableFields').each(function () {
+    if ($(this).val() === "" || $(this).val() === null) {
+      // Highlight the plugin's button toggle
+      $(this).addClass('warningBorder');
+      // $(".cityFulfillment_content select").removeClass("warningBorder");
+      $(this).parent().siblings('.warning_text').show();
+      isValid = false;
     }
   });
 
-  // SELECT fields
-  $('select.mandatory_editableFields').on('change', function () {
-    let val = $(this).val();
-    if (val && val !== "Select") {
-      $(this).removeClass('warningBorder');
-      $(this).closest('.field-container').find('.warning_text').hide();
+  $('button.mandatory_editableFields').each(function () {
+    if ($(this).val() === "" || $(this).val() === null) {
+      // Highlight the plugin's button toggle
+      $(this).addClass('warningBorder');
+      // $(".cityFulfillment_content select").removeClass("warningBorder");
+      $(this).parent().siblings('.warning_text').show();
+      isValid = false;
     }
   });
 
-});
+  // Target the button and its text container
+  var $dropdownBtn = $('#dropdownButton');
+  var selectedValue = $dropdownBtn.find('.selected-container').text().trim();
 
-
-/* =========================
-   CUSTOM DROPDOWN LOGIC
-========================= */
-const dropdownButton = document.getElementById("dropdownButton");
-const selectedContainer = dropdownButton.querySelector(".selected-container");
-const items = document.querySelectorAll(".dropdown-item");
-
-let selectedValues = [];
-const maxSelections = 3;
-
-function renderSelected() {
-  if (selectedValues.length > 0) {
-    selectedContainer.innerHTML = selectedValues.map(v => `
-      <span class="selected-item">
-        ${v} <span class="remove-icon" data-value="${v}">X</span>
-      </span>
-    `).join("");
-
-    // ✅ REMOVE ERROR WHEN VALID
+  // Check if the text is still the default "Select"
+  if (selectedValue === "Select" || selectedValue === "") {
+    console.log(selectedValue)
+    $dropdownBtn.addClass('warningBorder'); // Add red border
+    $('#fulfillment_mandatoryText').show();      // Show warning text
+    isValid = false;
+  }
+  else {
+    // If an option IS selected, ensure error is hidden (validation pass)
     $('#dropdownButton').removeClass('warningBorder');
     $('#fulfillment_mandatoryText').hide();
-
-  } else {
-    selectedContainer.textContent = "Select";
   }
 
-  // Remove item
-  document.querySelectorAll(".remove-icon").forEach(icon => {
-    icon.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const value = e.target.getAttribute("data-value");
-      selectedValues = selectedValues.filter(v => v !== value);
-      renderSelected();
-    });
-  });
-}
+  if (!isValid) {
+    e.preventDefault(); // Stop submission
+  }
+  // $('.dropdown-menu .dropdown-item').on('click', function () {
+  //   var pickedValue = $(this).data('value');
 
-// Dropdown item click
-items.forEach(item => {
-  item.addEventListener("click", (e) => {
-    e.preventDefault();
-    const value = item.getAttribute("data-value");
+  //   // Update the button text
+  //   $('#dropdownButton .selected-container').text(pickedValue);
 
-    if (!selectedValues.includes(value)) {
-      if (selectedValues.length < maxSelections) {
-        selectedValues.push(value);
-      }
-    } else {
-      selectedValues = selectedValues.filter(v => v !== value);
-    }
-
-    renderSelected();
-  });
+  //   // Remove error styling immediately
+  //   $('#dropdownButton').removeClass('warningBorder');
+  //   $('#fulfillment_mandatoryText').hide();
+  // });
 });
 
 /*Close Drawer*/
 $("#close-drawer-button, #cancelChanges_fulfillment").click(function () {
   $(".warning_text").hide();
+  $("#email").val('');
+   const emailInput = $("#email").val();
+    const messageSpan = $('#validation-message');
+    console.log(emailInput);
+    if (emailInput.length === 0) {
+      messageSpan.text(' ');
+    }
   $(".mandatory_editableFields").removeClass("warningBorder");
   $("#mandatoryfields_toast_fulfillment").hide();
   $("#deliveryField_fulfillment").hide();
@@ -179,7 +133,8 @@ $("#close-drawer-button, #cancelChanges_fulfillment").click(function () {
   $('#stateFulfillment_field').val('Select');
   $("#zipcodeFulfillment").val('');
   $("#street_fulfillment").val('');
-  $('#dropdownButton').text('Select'); // Replaces current text with a default label
+  selectedValues = []; //reset internal state properly
+  renderSelected(); //re-render UI correctly
 
 })
 /*Delivery Flow*/
@@ -190,6 +145,7 @@ $('#deliveryField').change(function () {
     console.log($(this).val())
     $(".email_content").show();
     $(".mail_content").hide();
+    $(".email-details").hide();
     $("#deliveryField_fulfillment").show();
     $('input[name="sendtoEmail"]').prop('checked', false);
     $('input[name="sendtoMail"]').prop('checked', false);
@@ -200,6 +156,13 @@ $('#deliveryField').change(function () {
     $('#stateFulfillment_field').val('Select');
     $("#zipcodeFulfillment").val('');
     $("#street_fulfillment").val('');
+    $("#email").val('');
+   const emailInput = $("#email").val();
+    const messageSpan = $('#validation-message');
+    console.log(emailInput);
+    if (emailInput.length === 0) {
+      messageSpan.text(' ');
+    }
   }
   else {
     $(".email_content").hide();
@@ -390,6 +353,54 @@ function checkStateFulfillment() {
     return false;
   }
 }
+const dropdownButton = document.getElementById("dropdownButton");
+const selectedContainer = dropdownButton.querySelector(".selected-container");
+const items = document.querySelectorAll(".dropdown-item");
+let selectedValues = [];
+const maxSelections = 3;
+
+function renderSelected() {
+  if (selectedValues.length > 0) {
+    selectedContainer.innerHTML = selectedValues.map(v => `
+      <span class="selected-item">
+        ${v} <span class="remove-icon" data-value="${v}">X</span>
+      </span>
+    `).join("");
+
+    $('#dropdownButton').removeClass('warningBorder');
+    $('#fulfillment_mandatoryText').hide();
+
+  } else {
+    selectedContainer.textContent = "Select";
+  }
+
+  document.querySelectorAll(".remove-icon").forEach(icon => {
+    icon.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const value = e.target.getAttribute("data-value");
+      selectedValues = selectedValues.filter(v => v !== value);
+      renderSelected();
+    });
+  });
+}
+
+
+items.forEach(item => {
+  item.addEventListener("click", (e) => {
+    e.preventDefault();
+    const value = item.getAttribute("data-value");
+
+    if (!selectedValues.includes(value)) {
+      if (selectedValues.length < maxSelections) {
+        selectedValues.push(value);
+      }
+    } else {
+      selectedValues = selectedValues.filter(v => v !== value);
+    }
+
+    renderSelected();
+  });
+});
 $(document).ready(function () {
   // Single listener on the parent div using Event Delegation
   $("#fulfillment_content").on("keydown", "select, button, input", function (event) {
@@ -402,7 +413,7 @@ $(document).ready(function () {
       // 1. Logic to get the value based on the element type
       if (fieldId === "dropdownButton") {
         // For the custom fulfillment dropdown, check the text in the span
-        val = $("#fulfillmentField").text().trim();
+        val = $("#dropdownButton .selected-container").text().trim();
         if (val === "Select") val = ""; // Treat placeholder as empty
       } else {
         // For standard select and input
