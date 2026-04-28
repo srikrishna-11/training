@@ -37,3 +37,6 @@ $(document).ready(function () {
     keyboard: false      // prevents closing on ESC key
   });
 });
+
+
+https://semantic-components.com/docs/components
