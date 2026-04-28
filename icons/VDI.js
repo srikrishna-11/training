@@ -1,3 +1,21 @@
+if (selectedValues.length > 0) {
+  selectedContainer.innerHTML = selectedValues.map(v => `
+    <span class="selected-item">
+      ${v} 
+      <span class="remove-icon" data-value="${v}">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </span>
+    </span>
+  `).join("");
+
+  $('#dropdownButton').removeClass('warningBorder');
+  $('#fulfillment_mandatoryText').hide();
+
+} else {
+  selectedContainer.textContent = "Select";
+}
+
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
