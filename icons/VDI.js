@@ -1,3 +1,39 @@
+/* Make the dropdown button flexible */
+#dropdownButton {
+  min-height: 40px;
+  height: auto;              /* allow expansion */
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;           /* allow items to wrap */
+  padding: 6px 10px;
+}
+
+/* Container that holds selected items */
+#dropdownButton .selected-container {
+  display: flex;
+  flex-wrap: wrap;           /* wrap to next line */
+  gap: 6px;
+  width: 100%;
+}
+
+/* Each selected item */
+.selected-item {
+  display: inline-flex;
+  align-items: center;
+  background: #f1f1f1;
+  padding: 4px 8px;
+  border-radius: 4px;
+  max-width: 100%;
+  word-break: break-word;    /* break long text */
+}
+
+/* Cross icon spacing */
+.remove-icon {
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+
 if (selectedValues.length > 0) {
   selectedContainer.innerHTML = selectedValues.map(v => `
     <span class="selected-item">
