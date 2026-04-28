@@ -1,3 +1,41 @@
+function adjustDropdownSize() {
+  const btn = document.getElementById("dropdownButton");
+  const container = btn.querySelector(".selected-container");
+
+  if (!btn || !container) return;
+
+  // Reset first
+  btn.style.height = "auto";
+
+  // Calculate needed height
+  const newHeight = container.scrollHeight;
+
+  // Apply height with small padding buffer
+  btn.style.height = (newHeight + 12) + "px";
+}
+
+function renderSelected() {
+  if (selectedValues.length > 0) {
+    selectedContainer.innerHTML = selectedValues.map(v => `
+      <span class="selected-item">
+        ${v} 
+        <span class="remove-icon" data-value="${v}">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </span>
+      </span>
+    `).join("");
+
+    $('#dropdownButton').removeClass('warningBorder');
+    $('#fulfillment_mandatoryText').hide();
+
+  } else {
+    selectedContainer.textContent = "Select";
+  }
+
+  // ✅ ADD THIS LINE
+  adjustDropdownSize();
+}
+
 /* Default dropdown item style */
 .dropdown-menu .dropdown-item {
   color: black;
