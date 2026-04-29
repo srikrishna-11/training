@@ -1,3 +1,12 @@
+document.querySelector(".dropdown-menu").addEventListener("click", function (e) {
+    if (e.target.classList.contains("dropdown-item")) {
+        setTimeout(function () {
+            document.querySelector(".dropdown-menu").scrollTop = 0;
+        }, 0);
+    }
+});
+
+
 <div class="row2 singleRow" id="deliveryField_fulfillment">
                                             <dl class="fulfillmentField_content">
                                                 <dt>Fulfillment<span class="mandatory_appointment">*</span></dt>
