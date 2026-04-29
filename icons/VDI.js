@@ -1,3 +1,46 @@
+<div class="row2 singleRow" id="deliveryField_fulfillment">
+                                            <dl class="fulfillmentField_content">
+                                                <dt>Fulfillment<span class="mandatory_appointment">*</span></dt>
+                                                <div class="dropdown">
+                                                    <button id="dropdownButton"
+                                                        class="btn btn-custom-select d-flex align-items-center mandatory_editableFields justify-content-between multiselect_field"
+                                                        type="button" data-bs-toggle="dropdown" onchange="checkFulfillment()"
+                                                            id="fulfillmentField">
+                                                        <span class="selected-container"
+                                                            onkeydown="handleTabFulfillment(event)">Select</span>
+                                                        <i class="fa-solid fa-chevron-down ms-2"></i>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="#"
+                                                                data-value="Option 1">Option 1</a></li>
+                                                        <li><a class="dropdown-item" href="#"
+                                                                data-value="Option 2">Option 2</a></li>
+                                                        <li><a class="dropdown-item" href="#"
+                                                                data-value="Option 3">Option 3</a></li>
+                                                        <li><a class="dropdown-item" href="#"
+                                                                data-value="Option 4">Option 4</a></li>
+                                                        <li><a class="dropdown-item" href="#"
+                                                                data-value="Option 5">Option 5</a></li>
+                                                    </ul>
+                                                </div>
+                                                <!-- <div class="select-box">
+                                                    <select class="dropdown-field form-select mandatory_editableFields"
+                                                        aria-label="Default select example" title="Select"
+                                                        id="fulfillmentField" onchange="checkFulfillment()">
+                                                        <option disabled hidden selected>Select</option>
+                                                        <option>Label</option>
+                                                        <option>Label</option>
+                                                    </select>
+                                                </div> -->
+                                                <div class="maxCount_info">Select a maximum of 3 request</div>
+                                                <div class="warning_text" id="fulfillment_mandatoryText">This
+                                                    field is required
+                                                </div>
+                                            </dl>
+                                        </div>
+
+
 document.querySelector(".dropdown-menu").addEventListener("click", function (e) {
     if (e.target.tagName === "LI" || e.target.tagName === "A" || e.target.tagName === "INPUT") {
         setTimeout(function () {
