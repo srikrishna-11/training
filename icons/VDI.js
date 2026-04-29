@@ -1,3 +1,15 @@
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("dropdown-item")) {
+        setTimeout(function () {
+            const dropdown = document.querySelector(".dropdown-menu");
+            dropdown.scrollTop = 0;
+            console.log("scrollTop reset:", dropdown.scrollTop); // confirm in console
+        }, 100); // increased to 100ms to wait for Bootstrap
+    }
+});
+
+
+
 document.querySelector(".dropdown-menu").addEventListener("click", function (e) {
     if (e.target.classList.contains("dropdown-item")) {
         setTimeout(function () {
