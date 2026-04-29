@@ -1,3 +1,13 @@
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const modal = document.querySelector('.modal-content');
+    if (modal) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }
+}, true);
+
 function adjustDropdownSize() {
   const btn = document.getElementById("dropdownButton");
   const container = btn.querySelector(".selected-container");
