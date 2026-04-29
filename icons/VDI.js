@@ -1,3 +1,12 @@
+document.querySelector(".dropdown-menu").addEventListener("click", function (e) {
+    if (e.target.tagName === "LI" || e.target.tagName === "A" || e.target.tagName === "INPUT") {
+        setTimeout(function () {
+            document.querySelector(".dropdown-menu.show").scrollTop = 0;
+        }, 0);
+    }
+});
+
+
 document.addEventListener("change", function (e) {
     if (e.target.closest(".fulfillmentField_content")) {
         const dropdown = document.querySelector(".dropdown-menu.show");
