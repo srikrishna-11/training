@@ -1,3 +1,24 @@
+    & .main {
+        & .fulfillmentField_content {
+            & ul {
+                &.dropdown-menu {
+                    height: auto;
+                    max-height: 160px;
+                    width: 100% !important;
+                    background: #fff;
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                    list-style: none;
+                    border: 1px solid #888888;
+                    position: absolute !important;
+                    top: -14px !important;
+                    left: 0 !important;
+                    padding-left: 0px;
+                    z-index: 9;
+                    box-shadow: none;
+                }
+
+
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     const modal = document.querySelector('.modal-content');
