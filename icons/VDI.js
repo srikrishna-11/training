@@ -1,4 +1,138 @@
-    & .main {
+document
+  .querySelector(".save_btn_fulfillment")
+  .addEventListener("click", function (e) {
+
+    e.preventDefault(); // stop submit
+    hideAllErrors();
+
+    let isValid = true;
+
+    /* -----------------------------
+       Delivery Method (REQUIRED)
+    ----------------------------- */
+    const delivery = document.getElementById("deliveryField").value;
+    if (!delivery || delivery === "Select") {
+        showError("delivery_mandatoryText","deliveryField");
+        isValid = false;
+    }
+
+    /* -----------------------------
+       Fulfillment (REQUIRED, max 3)
+    ----------------------------- */
+    
+
+    if (selectedValues.length==0) {
+        showError("fulfillment_mandatoryText","dropdownButton");
+        isValid = false;
+    } 
+
+    /* -----------------------------
+       Email Validation
+    ----------------------------- */
+    if (delivery === "Email") {
+        const emailType = document.querySelector(".sendtoEmail:checked");
+
+        if (!emailType) {
+            showError("emailField_mandatory","email");
+            isValid = false;
+        }
+
+        if (emailType && emailType.value === "NewEmailID") {
+            const email = document.getElementById("email").value.trim();
+			if (!isValidEmail(email)) {
+			               const msg = document.getElementById("validation-message");
+			               msg.style.display = "block";
+							showError("emailField_mandatory","email");
+			                isValid = false;
+			            }
+        }
+    }
+
+    /* -----------------------------
+       Mail Validation
+    ----------------------------- */
+    if (delivery === "Mail") {debugger;
+        const mailType = document.querySelector(".sendtoMail:checked");
+
+        if (!mailType) {
+            showError("mailSelection_mandatory");
+            isValid = false;
+        }
+
+        if (mailType && mailType.value === "NewMailingAddress") {
+            isValid &= validateField("firstName", "firstName_mandatory");
+            isValid &= validateField("lastName", "lastName_mandatory");
+            isValid &= validateField("street_fulfillment", "street_mandatory_fulfillment");
+            isValid &= validateField("zipcodeFulfillment", "zipcodeFulfillment_mandatory");
+            isValid &= validateSelect("cityFulfillment", "cityFulfillment_mandatory");
+            isValid &= validateSelect("stateFulfillment_field", "stateFulfillment_mandatory");
+        }
+    }
+
+    /* -----------------------------
+       Final Submit
+    ----------------------------- */
+    if (!isValid) {
+        document.getElementById("mandatoryfields_toast_fulfillment").style.display = "block";
+        scrollToFirstError();
+        return;
+    }
+	
+	createFulfillment();
+
+   
+});
+
+
+function hideAllErrors() {
+    document
+        .querySelectorAll(".warning_text")
+        .forEach(el => el.style.display = "none");
+
+    document.getElementById("mandatoryfields_toast_fulfillment").style.display = "none";
+	
+}
+
+function showError(id,fieldId) {
+    const el = document.getElementById(id);
+    if (el) el.style.display = "block";
+	$("#"+fieldId).addClass("warningBorder");
+}
+
+function validateField(inputId, errorId) {
+    const value = document.getElementById(inputId).value.trim();
+    if (!value) {
+        showError(errorId,inputId);
+        return false;
+    }
+    return true;
+}
+
+function validateSelect(selectId, errorId) {
+    const value = document.getElementById(selectId).value;
+    if (!value || value === "Select") {
+        showError(errorId,selectId);
+        return false;
+    }
+    return true;
+}
+
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function scrollToFirstError() {
+    const firstError = document.querySelector(".warning_text[style*='block']");
+    if (firstError) {
+        firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+}
+
+
+
+
+
+& .main {
         & .fulfillmentField_content {
             & ul {
                 &.dropdown-menu {
