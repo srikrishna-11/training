@@ -1,5 +1,15 @@
 document.addEventListener("change", function (e) {
     if (e.target.closest(".fulfillmentField_content")) {
+        const dropdown = document.querySelector(".dropdown-menu.show");
+        if (dropdown) {
+            dropdown.scrollTop = 0; // scroll to top after selection
+        }
+    }
+});
+
+
+document.addEventListener("change", function (e) {
+    if (e.target.closest(".fulfillmentField_content")) {
         if (selectedValues.length === 0) {
             showError("fulfillment_mandatoryText", "dropdownButton");
         } else {
