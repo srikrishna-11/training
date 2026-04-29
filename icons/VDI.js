@@ -1,5 +1,20 @@
 document.addEventListener("click", function (e) {
     if (e.target.classList.contains("dropdown-item")) {
+        const value = e.target.getAttribute("data-value");
+        
+        // If already selected, prevent deselection
+        if (selectedValues.includes(value)) {
+            e.preventDefault();
+            e.stopPropagation();
+            return;
+        }
+    }
+});
+
+
+
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("dropdown-item")) {
         setTimeout(function () {
             const dropdown = document.querySelector(".dropdown-menu");
             dropdown.scrollTop = 0;
