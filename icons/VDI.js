@@ -1,3 +1,21 @@
+dropdownButton.addEventListener("click", () => {
+  const dropdownMenu = dropdownButton.nextElementSibling;
+  const fulfillmentContainer = dropdownButton.closest(".dropdown");
+
+  if (dropdownMenu && dropdownMenu.classList.contains("dropdown-menu")) {
+    const containerBottom = fulfillmentContainer.getBoundingClientRect().bottom;
+    const containerLeft = fulfillmentContainer.getBoundingClientRect().left;
+    const containerWidth = fulfillmentContainer.offsetWidth;
+
+    dropdownMenu.style.position = "fixed";
+    dropdownMenu.style.top = containerBottom + "px";
+    dropdownMenu.style.left = containerLeft + "px";
+    dropdownMenu.style.width = containerWidth + "px";
+    dropdownMenu.scrollTop = 0;
+  }
+});
+------------
+
 const dropdownButton = document.getElementById("dropdownButton");
 const selectedContainer = dropdownButton.querySelector(".selected-container");
 const items = document.querySelectorAll(".dropdown-item");
