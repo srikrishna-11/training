@@ -1,3 +1,113 @@
+HTML:
+<div class="row2 singleRow" id="deliveryField_fulfillment">
+						<dl class="fulfillmentField_content">
+							<dt>
+								Fulfillment<span class="mandatory_appointment">*</span>
+							</dt>
+							<div class="dropdown">
+								<button id="dropdownButton"
+									class="btn btn-custom-select d-flex align-items-center mandatory_editableFields justify-content-between multiselect_field"
+									type="button" data-toggle="dropdown"
+									onchange="checkFulfillment()" id="fulfillmentField">
+									<span class="selected-container"
+										onkeydown="handleTabFulfillment(event)">Select</span> <i
+										class="fa-solid fa-chevron-down ms-2"></i>
+								</button>
+
+
+								<ul class="dropdown-menu">
+									<c:forEach var="fulfillment" items="${MasterData_Fulfillments}">
+										<li><a
+											class="dropdown-item ${fulfillment.deliverMethodMail ? 'mail' : ''} ${fulfillment.deilverMethodEmail ? 'email' : ''}"
+											href="#" data-key="${fulfillment.id}"
+											data-value="${fulfillment.name}"> ${fulfillment.name} </a></li>
+									</c:forEach>
+								</ul>
+
+							</div>
+							<div class="maxCount_info">Select a maximum of 3 requests</div>
+							<div class="warning_text" id="fulfillment_mandatoryText">This
+								field is required</div>
+						</dl>
+					</div>
+					
+					
+					
+JS:
+
+const dropdownButton = document.getElementById("dropdownButton");
+const selectedContainer = dropdownButton.querySelector(".selected-container");
+const items = document.querySelectorAll(".dropdown-item");
+let selectedValues = [];
+let selectedfulfillmentIds = {};
+const maxSelections = 3;
+
+function renderSelected() {
+  if (selectedValues.length > 0) {
+    selectedContainer.innerHTML = selectedValues.map(v => `
+    <span class="selected-item">
+      ${v} 
+      <span class="remove-icon" data-value="${v}">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </span>
+    </span>
+  `).join("");
+
+    $('#dropdownButton').removeClass('warningBorder');
+    $('#fulfillment_mandatoryText').hide();
+
+  } else {
+    selectedContainer.textContent = "Select";
+  }
+
+  document.querySelectorAll(".remove-icon").forEach(icon => {
+    icon.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const value = e.target.closest(".remove-icon").getAttribute("data-value");
+      selectedValues = selectedValues.filter(v => v !== value);
+
+	  for (const key in selectedfulfillmentIds) {
+	    if (selectedfulfillmentIds[key] === value) {
+	      delete selectedfulfillmentIds[key];
+	      break; 
+	    }
+	  }
+
+      renderSelected();
+    });
+  });
+}
+
+
+items.forEach(item => {
+  item.addEventListener("click", (e) => {
+    e.preventDefault();
+    const value = item.getAttribute("data-value");
+	const key = item.getAttribute("data-key");
+
+    if (!selectedValues.includes(value)) {
+      if (selectedValues.length < maxSelections) {
+        selectedValues.push(value);
+		selectedfulfillmentIds[key]  =value;
+      }
+    } else {
+      selectedValues = selectedValues.filter(v => v !== value);
+	  for (const k in selectedfulfillmentIds) {
+	  	    if (selectedfulfillmentIds[k] === value) {
+	  	      delete selectedfulfillmentIds[k];
+	  	      break; 
+	  	    }
+	  	  }
+    }
+
+    renderSelected();
+  });
+});
+
+
+
+
+
 document.addEventListener("click", function (e) {
     if (e.target.classList.contains("dropdown-item")) {
         const value = e.target.getAttribute("data-value");
