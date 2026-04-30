@@ -1,4 +1,25 @@
 dropdownButton.addEventListener("click", () => {
+  const fulfillmentContainer = dropdownButton.closest(".dropdown");
+
+  setTimeout(() => {
+    const dropdownMenu = document.querySelector(".dropdown-menu.show");
+    if (dropdownMenu) {
+      const containerBottom = fulfillmentContainer.getBoundingClientRect().bottom;
+      const containerLeft = fulfillmentContainer.getBoundingClientRect().left;
+      const containerWidth = fulfillmentContainer.offsetWidth;
+
+      dropdownMenu.style.position = "fixed";
+      dropdownMenu.style.top = containerBottom + "px";
+      dropdownMenu.style.left = containerLeft + "px";
+      dropdownMenu.style.width = containerWidth + "px";
+      dropdownMenu.scrollTop = 0;
+    }
+  }, 0);
+});
+
+
+-------------
+dropdownButton.addEventListener("click", () => {
   const dropdownMenu = dropdownButton.nextElementSibling;
   const fulfillmentContainer = dropdownButton.closest(".dropdown");
 
