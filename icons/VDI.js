@@ -1,3 +1,11 @@
+if (selectedValues.length === 0) {
+  showError("fulfillment_mandatoryText", "dropdownButton");
+} else {
+  document.getElementById("fulfillment_mandatoryText").style.display = "none";
+  $("#dropdownButton").removeClass("warningBorder");
+}
+
+----
 document
   .querySelector(".save_btn_fulfillment")
   .addEventListener("click", function (e) {
