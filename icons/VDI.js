@@ -1,3 +1,125 @@
+const dropdownButton = document.getElementById("dropdownButton");
+const selectedContainer = dropdownButton.querySelector(".selected-container");
+const items.forEach = document.querySelectorAll(".dropdown-item");
+let selectedValues = [];
+let selectedfulfillmentIds = {};
+const maxSelections = 3;
+
+function updateDisabledItems() {
+  items.forEach(item => {
+    const value = item.getAttribute("data-value");
+    if (selectedValues.includes(value)) {
+      item.classList.add("disabled");
+      item.style.pointerEvents = "none";
+      item.style.opacity = "0.5";
+    } else {
+      item.classList.remove("disabled");
+      item.style.pointerEvents = "";
+      item.style.opacity = "";
+    }
+  });
+}
+
+function renderSelected() {
+  if (selectedValues.length > 0) {
+    selectedContainer.innerHTML = selectedValues.map(v => `
+    <span class="selected-item">
+      ${v} 
+      <span class="remove-icon" data-value="${v}">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </span>
+    </span>
+  `).join("");
+    $('#dropdownButton').removeClass('warningBorder');
+    $('#fulfillment_mandatoryText').hide();
+  } else {
+    selectedContainer.textContent = "Select";
+  }
+
+  updateDisabledItems();
+
+  document.querySelectorAll(".remove-icon").forEach(icon => {
+    icon.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const value = e.target.closest(".remove-icon").getAttribute("data-value");
+      selectedValues = selectedValues.filter(v => v !== value);
+      for (const key in selectedfulfillmentIds) {
+        if (selectedfulfillmentIds[key] === value) {
+          delete selectedfulfillmentIds[key];
+          break;
+        }
+      }
+      renderSelected();
+	  if (selectedValues.length === 0) {
+	    showError("fulfillment_mandatoryText", "dropdownButton");
+	  } else {
+	    document.getElementById("fulfillment_mandatoryText").style.display = "none";
+	    $("#dropdownButton").removeClass("warningBorder");
+	  }
+    });
+  });
+}
+
+items.forEach(item => {
+  item.addEventListener("click", (e) => {
+    e.preventDefault();
+    const value = item.getAttribute("data-value");
+    const key = item.getAttribute("data-key");
+    if (!selectedValues.includes(value)) {
+      if (selectedValues.length < maxSelections) {
+        selectedValues.push(value);
+        selectedfulfillmentIds[key] = value;
+      }
+    } else {
+      selectedValues = selectedValues.filter(v => v !== value);
+      for (const k in selectedfulfillmentIds) {
+        if (selectedfulfillmentIds[k] === value) {
+          delete selectedfulfillmentIds[k];
+          break;
+        }
+      }
+    }
+    renderSelected();
+  });
+});
+
+// Reset dropdown scroll to top when opened
+dropdownButton.addEventListener("click", () => {
+  const dropdownMenu = dropdownButton.nextElementSibling;
+  if (dropdownMenu && dropdownMenu.classList.contains("dropdown-menu")) {
+    setTimeout(() => {
+      dropdownMenu.scrollTop = 0;
+    }, 0);
+  }
+});
+
+
+theme .main .fulfillmentField_content .dropdown {
+  position: relative !important;
+}
+.theme {
+	.main{
+		.fulfillmentField_content{
+			 ul{
+			 	&.dropdown-menu{
+			 		height: auto;
+			 		transform:none !important;
+		            max-height: 160px;
+		            width: 100% !important;
+		            background: #fff;
+		            overflow-x: hidden;
+		            overflow-y: auto;
+		            list-style: none;
+		            border: 1px solid #888888;
+		            position: absolute !important;
+		            top: 100% !important;
+		            left: 0 !important;
+		            padding-left: 0px;
+		            z-index:9;
+		            box-shadow:none;
+
+
+------------------------------------------------------
 if (selectedValues.length === 0) {
   showError("fulfillment_mandatoryText", "dropdownButton");
 } else {
