@@ -1,3 +1,16 @@
+.theme .main .fulfillmentField_content ul.dropdown-menu {
+  transform: none !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+}
+
+.theme .main .fulfillmentField_content .dropdown {
+  position: relative !important;
+}
+
+-------
+
 dropdownButton.addEventListener("click", () => {
   const fulfillmentContainer = dropdownButton.closest(".dropdown");
 
