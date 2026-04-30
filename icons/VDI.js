@@ -1,3 +1,19 @@
+items.forEach(item => {
+  item.addEventListener("click", (e) => {
+    e.preventDefault();
+    const value = item.getAttribute("data-value");
+    const key = item.getAttribute("data-key");
+    if (!selectedValues.includes(value)) {
+      if (selectedValues.length < maxSelections) {
+        selectedValues.push(value);
+        selectedfulfillmentIds[key] = value;
+        renderSelected();
+      }
+    }
+  });
+});
+
+---------
 const dropdownButton = document.getElementById("dropdownButton");
 const selectedContainer = dropdownButton.querySelector(".selected-container");
 const items.forEach = document.querySelectorAll(".dropdown-item");
