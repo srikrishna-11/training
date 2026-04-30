@@ -1,3 +1,89 @@
+const dropdownButton = document.getElementById("dropdownButton");
+const selectedContainer = dropdownButton.querySelector(".selected-container");
+const items = document.querySelectorAll(".dropdown-item");
+let selectedValues = [];
+let selectedfulfillmentIds = {};
+const maxSelections = 3;
+
+function renderSelected() {
+  if (selectedValues.length > 0) {
+    selectedContainer.innerHTML = selectedValues.map(v => `
+    <span class="selected-item">
+      ${v} 
+      <span class="remove-icon" data-value="${v}">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </span>
+    </span>
+  `).join("");
+    $('#dropdownButton').removeClass('warningBorder');
+    $('#fulfillment_mandatoryText').hide();
+  } else {
+    selectedContainer.textContent = "Select";
+  }
+
+  // Disable selected items in dropdown
+  items.forEach(item => {
+    const value = item.getAttribute("data-value");
+    if (selectedValues.includes(value)) {
+      item.classList.add("disabled");
+      item.style.pointerEvents = "none";
+      item.style.opacity = "0.5";
+    } else {
+      item.classList.remove("disabled");
+      item.style.pointerEvents = "";
+      item.style.opacity = "";
+    }
+  });
+
+  document.querySelectorAll(".remove-icon").forEach(icon => {
+    icon.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const value = e.target.closest(".remove-icon").getAttribute("data-value");
+      selectedValues = selectedValues.filter(v => v !== value);
+      for (const key in selectedfulfillmentIds) {
+        if (selectedfulfillmentIds[key] === value) {
+          delete selectedfulfillmentIds[key];
+          break;
+        }
+      }
+      renderSelected();
+    });
+  });
+}
+
+items.forEach(item => {
+  item.addEventListener("click", (e) => {
+    e.preventDefault();
+    const value = item.getAttribute("data-value");
+    const key = item.getAttribute("data-key");
+
+    // Only add if not already selected
+    if (!selectedValues.includes(value)) {
+      if (selectedValues.length < maxSelections) {
+        selectedValues.push(value);
+        selectedfulfillmentIds[key] = value;
+      }
+    }
+
+    renderSelected();
+  });
+});
+
+// Reset dropdown scroll to top when opened
+dropdownButton.addEventListener("click", () => {
+  const dropdownMenu = dropdownButton.nextElementSibling;
+  if (dropdownMenu && dropdownMenu.classList.contains("dropdown-menu")) {
+    setTimeout(() => {
+      dropdownMenu.scrollTop = 0;
+    }, 0);
+  }
+});
+
+
+
+
+
+------------------
 HTML:
 <div class="row2 singleRow" id="deliveryField_fulfillment">
 						<dl class="fulfillmentField_content">
