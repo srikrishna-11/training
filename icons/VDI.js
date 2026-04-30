@@ -1,3 +1,99 @@
+const dropdownButton = document.getElementById("dropdownButton");
+const selectedContainer = dropdownButton.querySelector(".selected-container");
+const items = document.querySelectorAll(".dropdown-item");
+let selectedValues = [];
+let selectedfulfillmentIds = {};
+const maxSelections = 3;
+
+function updateDisabledItems() {
+  items.forEach(item => {
+    const value = item.getAttribute("data-value");
+    if (selectedValues.includes(value)) {
+      item.classList.add("disabled");
+      item.style.pointerEvents = "none";
+      item.style.opacity = "0.5";
+    } else {
+      item.classList.remove("disabled");
+      item.style.pointerEvents = "";
+      item.style.opacity = "";
+    }
+  });
+}
+
+function renderSelected() {
+  if (selectedValues.length > 0) {
+    selectedContainer.innerHTML = selectedValues.map(v => `
+      <span class="selected-item">
+        ${v} 
+        <span class="remove-icon" data-value="${v}">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </span>
+      </span>
+    `).join("");
+    $('#dropdownButton').removeClass('warningBorder');
+    $('#fulfillment_mandatoryText').hide();
+  } else {
+    selectedContainer.textContent = "Select";
+  }
+
+  // Fix 3: Adjust button height to fit selected items
+  dropdownButton.style.height = "auto";
+  dropdownButton.style.minHeight = "38px";
+  dropdownButton.style.flexWrap = "wrap";
+
+  updateDisabledItems();
+
+  document.querySelectorAll(".remove-icon").forEach(icon => {
+    icon.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const value = e.target.closest(".remove-icon").getAttribute("data-value");
+      selectedValues = selectedValues.filter(v => v !== value);
+      for (const key in selectedfulfillmentIds) {
+        if (selectedfulfillmentIds[key] === value) {
+          delete selectedfulfillmentIds[key];
+          break;
+        }
+      }
+      renderSelected();
+
+      // Fix 4: Show inline error when all values removed
+      if (selectedValues.length === 0) {
+        showError("fulfillment_mandatoryText", "dropdownButton");
+      } else {
+        document.getElementById("fulfillment_mandatoryText").style.display = "none";
+        $("#dropdownButton").removeClass("warningBorder");
+      }
+    });
+  });
+}
+
+// Fix 1: Removed else block to prevent deselect on click
+items.forEach(item => {
+  item.addEventListener("click", (e) => {
+    e.preventDefault();
+    const value = item.getAttribute("data-value");
+    const key = item.getAttribute("data-key");
+    if (!selectedValues.includes(value)) {
+      if (selectedValues.length < maxSelections) {
+        selectedValues.push(value);
+        selectedfulfillmentIds[key] = value;
+      }
+    }
+    renderSelected();
+  });
+});
+
+// Fix 2: Reset dropdown scroll to top on open
+dropdownButton.addEventListener("click", () => {
+  setTimeout(() => {
+    const dropdownMenu = document.querySelector(".dropdown-menu.show");
+    if (dropdownMenu) {
+      dropdownMenu.scrollTop = 0;
+    }
+  }, 0);
+});
+
+-------------
 The value are getting de-selected when user clicks on the same fulfillment record twice from the dropdown.
 The dropdown is not moved back to the default top value once after selection
 The dropdown field is not aligned within the outerline after selection of more than 2 requests.
