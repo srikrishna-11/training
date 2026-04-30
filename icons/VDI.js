@@ -1,3 +1,38 @@
+function updateDisabledItems() {
+  items.forEach(item => {
+    const value = item.getAttribute("data-value");
+    if (selectedValues.includes(value)) {
+      item.classList.add("disabled");
+      item.style.pointerEvents = "none";
+      item.style.opacity = "0.5";
+    } else {
+      item.classList.remove("disabled");
+      item.style.pointerEvents = "";
+      item.style.opacity = "";
+    }
+  });
+}
+
+function renderSelected() {
+  if (selectedValues.length > 0) {
+    selectedContainer.innerHTML = selectedValues.map(v => `
+    <span class="selected-item">
+      ${v} 
+      <span class="remove-icon" data-value="${v}">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </span>
+    </span>
+  `).join("");
+    $('#dropdownButton').removeClass('warningBorder');
+    $('#fulfillment_mandatoryText').hide();
+  } else {
+    selectedContainer.textContent = "Select";
+  }
+
+  updateDisabledItems();
+
+
+-----------
 const dropdownButton = document.getElementById("dropdownButton");
 const selectedContainer = dropdownButton.querySelector(".selected-container");
 const items = document.querySelectorAll(".dropdown-item");
