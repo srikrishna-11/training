@@ -1,4 +1,14 @@
 #fulfillment_content .multiselect_field,
+#fulfillment_content .multiselect,
+#fulfillment_content .multiselect__tags,
+#fulfillment_content .multiselect--active .multiselect__tags,
+#fulfillment_content .multiselect_field:focus {
+  border-color: #your-color !important; /* e.g. #0078D4 for blue */
+  box-shadow: none !important;
+}
+----------
+
+#fulfillment_content .multiselect_field,
 #fulfillment_content .multiselect__tags,
 #fulfillment_content .multiselect {
   border-color: transparent !important;
