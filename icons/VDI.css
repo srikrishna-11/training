@@ -1,3 +1,22 @@
+.medicare-broker-body{
+	.fulfillment-table-body{
+		.table-wrap{
+			dl{
+				&:first-child{
+					max-wdith: 300px;
+					.wrap-text{
+						width: 290px;
+					}
+				}
+			}
+		}
+	}
+}
+
+-----------------
+
+
+
 #fulfillment_content .multiselect_field,
 #fulfillment_content .multiselect,
 #fulfillment_content .multiselect__tags,
