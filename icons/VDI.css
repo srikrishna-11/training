@@ -1,3 +1,12 @@
+#fulfillment_content .multiselect_field,
+#fulfillment_content .multiselect__tags,
+#fulfillment_content .multiselect {
+  border-color: transparent !important;
+  /* or use your desired color: */
+  border-color: #your-color !important;
+}
+
+
 /****COMMON****/
 
 body {
