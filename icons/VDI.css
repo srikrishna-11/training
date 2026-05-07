@@ -1,4 +1,7 @@
-
+VM15674:2 Uncaught ReferenceError: confirmationHandled is not defined
+    at HTMLDocument.<anonymous> (<anonymous>:2:28)
+    at HTMLDocument.dispatch (combo?browserId=chrome&minifierType=js&languageId=en_US&t=1778090101447&/o/frontend-js-jquery-web/jquery/jquery.min.js&/o/frontend-js-jquery-web/jquery/init.js&/o/frontend-js-jquery-web/jquery/ajax.js&/o/frontend-js-jquery-web/jquery/bootstrap.bundle.min.js&/o/frontend-js-jquery-web/jquery/collapsible_search.js&/o/frontend-js-jquery-web/jquery/fm.js&/o/frontend-js-jquery-web/jquery/form.js&/o/frontend-js-jquery-web/jquery/popper.min.js&/o/frontend-js-jquery-web/jquery/side_navigation.js:2:43090)
+    at v.handle (combo?browserId=chrome&minifierType=js&languageId=en_US&t=1778090101447&/o/frontend-js-jquery-web/jquery/jquery.min.js&/o/frontend-js-jquery-web/jquery/init.js&/o/frontend-js-jquery-web/jquery/ajax.js&/o/frontend-js-jquery-web/jquery/bootstrap.bundle.min.js&/o/frontend-js-jquery-web/jquery/collapsible_search.js&/o/frontend-js-jquery-web/jquery/fm.js&/o/frontend-js-jquery-web/jquery/form.js&/o/frontend-js-jquery-web/jquery/popper.min.js&/o/frontend-js-jquery-web/jquery/side_navigation.js:2:41074)
 $(document).on('keydown', function (e) {
   if (e.key === 'Enter' && confirmationHandled) {
     e.preventDefault();
