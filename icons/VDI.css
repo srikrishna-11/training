@@ -1,4 +1,12 @@
 
+
+function closePopup() {
+  $('#confirmPopup').hide();
+  $(document).off('keydown.confirmPopup');
+}
+
+
+
 /* Default, hover, focus, active states */
 .fulfillmentField_content button {
   border: 1px solid #888888 !important;
