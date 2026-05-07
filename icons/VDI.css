@@ -1,3 +1,21 @@
+function checkFulfillment() {
+  var fulfillment = $("#fulfillmentField").val();
+  fulfillment != null ? fulfillment.trim() : null;
+  if (fulfillment && fulfillment !== '') {
+    console.log(fulfillment);
+    $('#fulfillment_mandatoryText').hide();
+    $(".fulfillmentField_content button").removeClass("warningBorder");
+    return true;
+  }
+  else {
+    $('#fulfillment_mandatoryText').show();
+    $(".fulfillmentField_content button").addClass("warningBorder");
+    return false;
+  }
+}
+----------------
+
+
 #fulfillment_content .multiselect.is-invalid .multiselect__tags,
 #fulfillment_content .multiselect_field.is-invalid {
   border-color: #dc3545 !important;
