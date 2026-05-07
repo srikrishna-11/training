@@ -1,4 +1,36 @@
 
+$(document).on('keydown', function (e) {
+  if (e.key === 'Enter' && $('#confirmPopup').is(':visible')) {
+    e.preventDefault();
+    return false;
+  }
+});
+---------
+
+$('#yesBtn').on('click', function () {
+  $('#confirmPopup').hide();
+  $('#safeElement').focus(); // any neutral element
+});
+---------
+
+$(document).one('keydown', function (e) {
+  if (e.key === 'Enter') {
+    $('#yesBtn').click();
+  }
+});
+-----
+	  $('#confirmPopup').remove();
+	  ---------
+	  $(document).off('keydown'); // clear old handlers
+	  -------
+
+
+
+
+
+
+
+	  
 
 function closePopup() {
   $('#confirmPopup').hide();
