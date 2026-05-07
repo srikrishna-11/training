@@ -1,3 +1,28 @@
+
+/* Default, hover, focus, active states */
+.fulfillmentField_content button {
+  border: 1px solid #888888 !important;
+}
+
+/* Ensure selection/focus doesn't change the grey */
+.fulfillmentField_content button:hover,
+.fulfillmentField_content button:focus,
+.fulfillmentField_content button:active,
+.fulfillmentField_content button:focus-visible {
+  border-color: #888888 !important;
+  box-shadow: none;
+  outline: none;
+}
+
+/* DO NOT affect warning state */
+.fulfillmentField_content button.warningBorder {
+  border-color: inherit; /* or keep your existing warning style */
+}
+
+----------
+
+
+
 function checkFulfillment() {
   var fulfillment = $("#fulfillmentField").val();
   fulfillment != null ? fulfillment.trim() : null;
