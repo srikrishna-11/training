@@ -1,5 +1,16 @@
 
 $(document).on('keydown', function (e) {
+  if (e.key === 'Enter' && confirmationHandled) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    return false;
+  }
+});
+------
+
+
+
+$(document).on('keydown', function (e) {
   if (e.key === 'Enter' && $('#confirmPopup').is(':visible')) {
     e.preventDefault();
     return false;
