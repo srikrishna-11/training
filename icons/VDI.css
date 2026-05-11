@@ -1,3 +1,29 @@
+.medicare-broker-body {
+  .fulfillment-table-body {
+    td {
+      &:first-child {
+        .table-wrap {
+          max-width: 300px;
+        }
+
+        .wrap-text {
+          width: 270px;
+          max-width: 30ch;
+
+          // ✅ multi-line ellipsis
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: normal;
+        }
+      }
+    }
+  }
+}
+------
+
 text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
