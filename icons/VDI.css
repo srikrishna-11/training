@@ -1,3 +1,17 @@
+
+const email = document.querySelector('.editable_fields.mandatory_editableFields');
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+email.addEventListener('input', () => {
+  if (emailRegex.test(email.value.trim())) {
+    email.classList.remove('warningBorder');
+  } else {
+    email.classList.add('warningBorder');
+  }
+});
+
+
 editable_fields mandatory_editableFields
 
 .medicare-broker-body {
