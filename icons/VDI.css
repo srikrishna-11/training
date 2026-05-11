@@ -1,3 +1,30 @@
+document.querySelectorAll('.custom-dropdown').forEach(dd => {
+  const list = dd.querySelector('.dropdown-list');
+  const items = list.querySelectorAll('li');
+  let index = -1;
+
+  dd.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Enter') return;
+    e.preventDefault();
+
+    if (e.key === 'ArrowDown') index = (index + 1) % items.length;
+    if (e.key === 'ArrowUp') index = (index - 1 + items.length) % items.length;
+
+    items.forEach(li => li.classList.remove('active'));
+
+    if (e.key === 'Enter' && index > -1) {
+      dd.querySelector('input').value = items[index].textContent;
+      return;
+    }
+
+    items[index].classList.add('active');
+    items[index].scrollIntoView({ block: 'nearest' });
+  });
+});
+
+----------
+
+
 /* =========================
    GLOBAL STATE (MUST BE OUTSIDE ALL FUNCTIONS)
 ========================= */
