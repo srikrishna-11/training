@@ -1,3 +1,47 @@
+wrapper.addEventListener("keydown", handleKeyDown);
+      searchInput.addEventListener("keydown", handleKeyDown);
+
+      function handleKeyDown(e) {
+        if (!isOpen) {
+          if (["ArrowDown", "Enter", " "].includes(e.key)) {
+            e.preventDefault();
+            openDropdown();
+          }
+          return;
+        }
+
+        switch (e.key) {
+          case "ArrowDown":
+            e.preventDefault();
+            focusedIndex =
+              focusedIndex < filteredOptions.length - 1 ? focusedIndex + 1 : 0;
+            renderOptions();
+            break;
+
+          case "ArrowUp":
+            e.preventDefault();
+            focusedIndex =
+              focusedIndex > 0 ? focusedIndex - 1 : filteredOptions.length - 1;
+            renderOptions();
+            break;
+
+          case "Enter":
+            e.preventDefault();
+            if (focusedIndex >= 0 && focusedIndex < filteredOptions.length) {
+              selectOption(filteredOptions[focusedIndex].value);
+            }
+            break;
+
+          case "Escape":
+            e.preventDefault();
+            closeDropdown();
+            wrapper.focus();
+            break;
+        }
+      }
+
+------
+
 <div class="custom-dropdown">
                                 <input id="manual-startTimes" name="startTime" onkeydown="handleTab(event)" inputmode="text" placeholder="HH:MM AM/PM" type="text" class="form-control mandatory_editableFields required reset-values" value="" maxlength="8" autocomplete="off">
   								<ul id="time_list_startTime" class="dropdown-list" style="display: block;"><li data-value="12:00 AM">12:00 AM</li><li data-value="12:30 AM">12:30 AM</li><li data-value="01:00 AM">01:00 AM</li><li data-value="01:30 AM">01:30 AM</li><li data-value="02:00 AM">02:00 AM</li><li data-value="02:30 AM">02:30 AM</li><li data-value="03:00 AM">03:00 AM</li><li data-value="03:30 AM">03:30 AM</li><li data-value="04:00 AM">04:00 AM</li><li data-value="04:30 AM">04:30 AM</li><li data-value="05:00 AM">05:00 AM</li><li data-value="05:30 AM">05:30 AM</li><li data-value="06:00 AM">06:00 AM</li><li data-value="06:30 AM">06:30 AM</li><li data-value="07:00 AM">07:00 AM</li><li data-value="07:30 AM">07:30 AM</li><li data-value="08:00 AM">08:00 AM</li><li data-value="08:30 AM">08:30 AM</li><li data-value="09:00 AM">09:00 AM</li><li data-value="09:30 AM">09:30 AM</li><li data-value="10:00 AM">10:00 AM</li><li data-value="10:30 AM">10:30 AM</li><li data-value="11:00 AM">11:00 AM</li><li data-value="11:30 AM">11:30 AM</li><li data-value="12:00 PM">12:00 PM</li><li data-value="12:30 PM">12:30 PM</li><li data-value="01:00 PM">01:00 PM</li><li data-value="01:30 PM">01:30 PM</li><li data-value="02:00 PM">02:00 PM</li><li data-value="02:30 PM">02:30 PM</li><li data-value="03:00 PM">03:00 PM</li><li data-value="03:30 PM">03:30 PM</li><li data-value="04:00 PM">04:00 PM</li><li data-value="04:30 PM">04:30 PM</li><li data-value="05:00 PM">05:00 PM</li><li data-value="05:30 PM">05:30 PM</li><li data-value="06:00 PM">06:00 PM</li><li data-value="06:30 PM">06:30 PM</li><li data-value="07:00 PM">07:00 PM</li><li data-value="07:30 PM">07:30 PM</li><li data-value="08:00 PM">08:00 PM</li><li data-value="08:30 PM">08:30 PM</li><li data-value="09:00 PM">09:00 PM</li><li data-value="09:30 PM">09:30 PM</li><li data-value="10:00 PM">10:00 PM</li><li data-value="10:30 PM">10:30 PM</li><li data-value="11:00 PM">11:00 PM</li><li data-value="11:30 PM">11:30 PM</li></ul>
