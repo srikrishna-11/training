@@ -1,3 +1,31 @@
+$(function () {
+  let i = -1;
+
+  $('#manual-startTimes').on('keydown', function (e) {
+    const list = $('#time_list_startTime li');
+    if (!list.length) return;
+
+    if (e.which === 40 || e.which === 38) { // DOWN / UP
+      e.preventDefault();
+
+      i += e.which === 40 ? 1 : -1;
+      i = (i + list.length) % list.length;
+
+      list.removeClass('active')
+          .eq(i).addClass('active')[0]
+          .scrollIntoView({ block: 'nearest' });
+
+      $(this).val(list.eq(i).text().trim());
+    }
+
+    if (e.which === 13 && i >= 0) { // ENTER
+      e.preventDefault();
+      $(this).val(list.eq(i).text().trim());
+      $('#time_list_startTime').hide();
+    }
+  });
+});
+	----
 #time_list_startTime li.active{
     background:#0078d4;
     color:#fff;
