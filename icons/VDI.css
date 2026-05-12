@@ -2,6 +2,87 @@ $(document).ready(function () {
  
     let currentIndex = -1;
  
+    $('#manual-startTimes').on('keydown', function (e) {
+ 
+        let list = $('#time_list_startTime li');
+ 
+        // DOWN
+        if (e.which == 40) {
+ 
+            e.preventDefault();
+ 
+            currentIndex++;
+ 
+            if (currentIndex >= list.length) {
+                currentIndex = 0;
+            }
+ 
+            list.removeClass('active');
+ 
+            let activeItem = list.eq(currentIndex);
+ 
+            activeItem.addClass('active');
+ 
+            $('#manual-startTimes').val(
+                activeItem.text().trim()
+            );
+ 
+            activeItem[0].scrollIntoView({
+                block: 'nearest'
+            });
+        }
+ 
+        // UP
+        if (e.which == 38) {
+ 
+            e.preventDefault();
+ 
+            currentIndex--;
+ 
+            if (currentIndex < 0) {
+                currentIndex = list.length - 1;
+            }
+ 
+            list.removeClass('active');
+ 
+            let activeItem = list.eq(currentIndex);
+ 
+            activeItem.addClass('active');
+ 
+            $('#manual-startTimes').val(
+                activeItem.text().trim()
+            );
+ 
+            activeItem[0].scrollIntoView({
+                block: 'nearest'
+            });
+        }
+ 
+        // ENTER
+        if (e.which == 13) {
+ 
+            e.preventDefault();
+ 
+            if (currentIndex >= 0) {
+ 
+                $('#manual-startTimes').val(
+                    list.eq(currentIndex).text().trim()
+                );
+ 
+                $('#time_list_startTime').hide();
+            }
+        }
+ 
+    });
+ 
+});
+
+	-----
+
+$(document).ready(function () {
+ 
+    let currentIndex = -1;
+ 
     $('#startTime').on('keydown', function (e) {
  
         const list = $('#time_list_startTime li');
