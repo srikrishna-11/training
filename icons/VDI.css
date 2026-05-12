@@ -1,3 +1,31 @@
+$(document).on("keydown", "#manual-endTimes, #manual-startTimes", function(e) {
+	    let $list = $("#time_list_endTime, #time_list_startTime");
+	    let $items = $list.find("li:visible"); // Only navigate visible items
+	    let $active = $items.filter(".active-item");
+	    let index = $items.index($active);
+	 
+	    if (e.key === "ArrowDown") {
+	        e.preventDefault();
+	        $items.removeClass("active-item");
+	        let $next = (index + 1 < $items.length) ? $items.eq(index + 1) : $items.first();
+	        $next.addClass("active-item").get(0).scrollIntoView({ block: "nearest" });
+	    } 
+	    else if (e.key === "ArrowUp") {
+	        e.preventDefault();
+	        $items.removeClass("active-item");
+	        let $prev = (index > 0) ? $items.eq(index - 1) : $items.last();
+	        $prev.addClass("active-item").get(0).scrollIntoView({ block: "nearest" });
+	    } 
+	    else if (e.key === "Enter") {
+	        if ($active.length) {
+	            e.preventDefault();
+	            $active.click(); // Triggers your existing selection logic
+	            $list.hide();
+	        }
+	    }
+	});
+	------
+
 wrapper.addEventListener("keydown", handleKeyDown);
       searchInput.addEventListener("keydown", handleKeyDown);
 
