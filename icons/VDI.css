@@ -1,3 +1,69 @@
+$(document).ready(function () {
+ 
+    let index = -1;
+ 
+    $('#startTime').on('keydown', function (e) {
+ 
+        let $items = $('#time_list_startTime li');
+ 
+        // DOWN
+        if (e.keyCode === 40) {
+ 
+            e.preventDefault();
+ 
+            index++;
+ 
+            if (index >= $items.length) {
+                index = 0;
+            }
+ 
+            $items.removeClass('active');
+ 
+            $items.eq(index)
+                .addClass('active')[0]
+                .scrollIntoView({
+                    block: 'nearest'
+                });
+        }
+ 
+        // UP
+        if (e.keyCode === 38) {
+ 
+            e.preventDefault();
+ 
+            index--;
+ 
+            if (index < 0) {
+                index = $items.length - 1;
+            }
+ 
+            $items.removeClass('active');
+ 
+            $items.eq(index)
+                .addClass('active')[0]
+                .scrollIntoView({
+                    block: 'nearest'
+                });
+        }
+ 
+        // ENTER
+        if (e.keyCode === 13) {
+ 
+            e.preventDefault();
+ 
+            if (index >= 0) {
+                $(this).val(
+                    $items.eq(index).text()
+                );
+            }
+        }
+ 
+    });
+ 
+});
+
+		-------
+
 const input = document.querySelector(".manual-startTime");
 
 input?.addEventListener("keydown", e => {
