@@ -1,4 +1,39 @@
 const input = document.querySelector('#startTime');
+const timeItems = document.querySelectorAll('#time_list_startTime li');
+ 
+let index = -1;
+ 
+input.addEventListener('keydown', (e) => {
+ 
+    if (!['ArrowDown', 'ArrowUp', 'Enter'].includes(e.key)) return;
+ 
+    e.preventDefault();
+ 
+    if (e.key === 'ArrowDown') {
+        index = (index + 1) % timeItems.length;
+    }
+ 
+    if (e.key === 'ArrowUp') {
+        index = (index - 1 + timeItems.length) % timeItems.length;
+    }
+ 
+    timeItems.forEach(li => li.classList.remove('active'));
+ 
+    if (e.key !== 'Enter') {
+        timeItems[index].classList.add('active');
+        timeItems[index].scrollIntoView({
+            block: 'nearest'
+        });
+    }
+ 
+    if (e.key === 'Enter' && index >= 0) {
+        input.value = timeItems[index].innerText;
+    }
+});
+
+----
+
+const input = document.querySelector('#startTime');
 const items = document.querySelectorAll('#time_list_startTime li');
  
 let index = -1;
