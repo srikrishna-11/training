@@ -1,3 +1,43 @@
+document.addEventListener("keydown", function (e) {
+  const input = document.querySelector(".manual-startTime");
+  if (!input || document.activeElement !== input) return;
+
+  const dropdown = input.closest(".dropdown-list");
+  if (!dropdown) return;
+
+  const items = dropdown.querySelectorAll(".time-option");
+  if (!items.length) return;
+
+  let currentIndex = [...items].findIndex(
+    item => item.classList.contains("active")
+  );
+
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    currentIndex = currentIndex < items.length - 1 ? currentIndex + 1 : 0;
+  }
+
+  if (e.key === "ArrowUp") {
+    e.preventDefault();
+    currentIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
+  }
+
+  items.forEach(item => item.classList.remove("active"));
+
+  const selectedItem = items[currentIndex];
+  selectedItem.classList.add("active");
+
+  // Set time value to input
+  input.value = selectedItem.textContent.trim();
+
+  // Ensure visible
+  selectedItem.scrollIntoView({
+    block: "nearest",
+    behavior: "smooth"
+  });
+});
+	  ---
+
 const input = document.querySelector('#startTime');
 const timeItems = document.querySelectorAll('#time_list_startTime li');
  
