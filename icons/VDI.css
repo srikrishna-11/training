@@ -2,6 +2,48 @@ $(document).ready(function() {
     const $timeInput = $('#followUp_time');
     const $timeList = $('#time_list');
     const $dropdownContainer = $('.custom-dropdown');
+    $timeList.find('li').attr('tabindex', '-1');
+
+    $timeInput.on('focus', function() {
+        $timeList.show();
+        // Scroll to previously selected item on reopen
+        let selectedText = $timeInput.data("selected-item");
+        if (selectedText) {
+            let $items = $timeList.find("li:visible");
+            let $match = $items.filter(function () {
+                return $(this).text().trim() === selectedText;
+            });
+            if ($match.length) {
+                $match.get(0).scrollIntoView({ block: "nearest" });
+            }
+        }
+    });
+
+    $timeInput.on('keydown', function(e) {
+        if (e.which === 9) {
+            $timeList.hide();
+        }
+    });
+
+    $dropdownContainer.on('focusout', function() {
+        setTimeout(function() {
+            if (!$dropdownContainer.has(document.activeElement).length) {
+                $timeList.hide();
+            }
+        }, 10);
+    });
+
+    // Store selected item when a time is clicked
+    $timeList.on('click', 'li', function() {
+        $timeInput.data("selected-item", $(this).text().trim());
+    });
+});
+			------------------
+
+$(document).ready(function() {
+    const $timeInput = $('#followUp_time');
+    const $timeList = $('#time_list');
+    const $dropdownContainer = $('.custom-dropdown');
 
     $timeList.find('li').attr('tabindex', '-1');
 
