@@ -1,4 +1,14 @@
 $("#cancelBtn_opportunityDetails").click(function () {
+  $("#cancel_popup_opportunityDetails").modal({
+    backdrop: 'static',  // prevents closing on outside click
+    keyboard: false       // prevents closing on ESC key press
+  });
+  $("#cancel_popup_opportunityDetails").modal('show');
+});
+
+-----
+
+$("#cancelBtn_opportunityDetails").click(function () {
     $("#cancel_popup_opportunityDetails").modal('show');
   })
   
