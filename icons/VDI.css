@@ -1,3 +1,24 @@
+$(document).ready(function () {
+  $(document).on('click', function (e) {
+    if ($(e.target).hasClass('modal') && $(e.target).attr('id') === 'cancel_popup_opportunityDetails') {
+      e.stopPropagation();
+      return false;
+    }
+  });
+
+  $('#cancel_popup_opportunityDetails').data('bs.modal', null);
+
+  $('#cancelBtn_opportunityDetails').click(function () {
+    $('#cancel_popup_opportunityDetails').modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+    $('#cancel_popup_opportunityDetails').modal('show');
+  });
+});
+
+-----
+
 $("#cancelBtn_opportunityDetails").click(function () {
   $("#cancel_popup_opportunityDetails").modal({
     backdrop: 'static',  // prevents closing on outside click
