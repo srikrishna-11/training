@@ -1,3 +1,16 @@
+$("#cancelBtn_opportunityDetails").click(function () {
+    $("#cancel_popup_opportunityDetails").modal('show');
+  })
+  
+  $(".success_close").click(function () {
+    $("#success_toastmsg").hide();
+  })
+  $(".blueclose_toast").click(function () {
+    $("#cancelledChanges").hide();
+  })
+
+	  -----
+
 const backdrop = document.querySelector('.modal-backdrop'); // adjust selector
 if (backdrop) {
   backdrop.style.pointerEvents = 'none'; // disables click on backdrop
