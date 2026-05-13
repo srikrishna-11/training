@@ -1,3 +1,10 @@
+const backdrop = document.querySelector('.modal-backdrop'); // adjust selector
+if (backdrop) {
+  backdrop.style.pointerEvents = 'none'; // disables click on backdrop
+}
+
+-----
+
 document.addEventListener('click', function (e) {
   const modal = document.querySelector('.modal-content');
   if (modal && !modal.contains(e.target)) {
