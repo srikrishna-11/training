@@ -6,6 +6,78 @@ function bindTimeListNavigation(inputSelector, listSelector) {
         let index = $items.index($active);
 
         if (e.key === "Tab") {
+            e.preventDefault();
+            if ($list.is(":visible") && $active.length) {
+                // Select the active item and store it
+                $active.click();
+                $(this).data("selected-item", $active.text().trim());
+                $list.hide();
+            } else {
+                // Reopen and scroll to previously selected item
+                $list.show();
+                let selectedText = $(this).data("selected-item");
+                if (selectedText) {
+                    let $match = $items.filter(function () {
+                        return $(this).text().trim() === selectedText;
+                    });
+                    if ($match.length) {
+                        $items.removeClass("active-item");
+                        $match.addClass("active-item")
+                              .get(0)
+                              .scrollIntoView({ block: "nearest" });
+                    }
+                } else if ($items.length) {
+                    $items.first().addClass("active-item")
+                          .get(0)
+                          .scrollIntoView({ block: "nearest" });
+                }
+            }
+            return;
+        }
+
+        if (!$list.is(":visible")) return;
+
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            $items.removeClass("active-item");
+            let $next = (index + 1 < $items.length)
+                ? $items.eq(index + 1)
+                : $items.first();
+            $next.addClass("active-item")
+                 .get(0)
+                 .scrollIntoView({ block: "nearest" });
+        }
+        else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            $items.removeClass("active-item");
+            let $prev = (index > 0)
+                ? $items.eq(index - 1)
+                : $items.last();
+            $prev.addClass("active-item")
+                 .get(0)
+                 .scrollIntoView({ block: "nearest" });
+        }
+        else if (e.key === "Enter") {
+            if ($active.length) {
+                e.preventDefault();
+                $active.click();
+                $(this).data("selected-item", $active.text().trim());
+                $list.hide();
+            }
+        }
+    });
+}
+
+		----------
+
+function bindTimeListNavigation(inputSelector, listSelector) {
+    $(document).on("keydown", inputSelector, function (e) {
+        let $list = $(listSelector);
+        let $items = $list.find("li:visible");
+        let $active = $items.filter(".active-item");
+        let index = $items.index($active);
+
+        if (e.key === "Tab") {
             if ($list.is(":visible") && $active.length) {
                 // List is open and something is active — select it
                 e.preventDefault();
