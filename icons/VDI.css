@@ -1,3 +1,29 @@
+$(document).ready(function() {
+    const $timeInput = $('#followUp_time');
+    const $timeList = $('#time_list');
+    const $dropdownContainer = $('.custom-dropdown');
+
+    $timeList.find('li').attr('tabindex', '-1');
+
+    $timeInput.on('focus', function() {
+        $timeList.show();
+    });
+
+    $timeInput.on('keydown', function(e) {
+        if (e.which === 9) { 
+            $timeList.hide();
+        }
+    });
+
+    $dropdownContainer.on('focusout', function() {
+        setTimeout(function() {
+            if (!$dropdownContainer.has(document.activeElement).length) {
+                $timeList.hide();
+            }
+        }, 10);
+    });
+		------
+
 function bindTimeListNavigation(inputSelector, listSelector) {
     $(document).on("keydown", inputSelector, function (e) {
         let $list = $(listSelector);
