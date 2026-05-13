@@ -1,3 +1,13 @@
+document.addEventListener('click', function (e) {
+  const modal = document.querySelector('.modal-content');
+  if (modal && !modal.contains(e.target)) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+}, true); // 'true' uses capture phase to intercept before other handlers
+
+	  ---------
+
 $(document).on('shown.bs.modal', function() {
     $(document).off('click.dismiss.bs.modal');
     $('[data-dismiss="modal"]').not('.cancel-btn').hide();
