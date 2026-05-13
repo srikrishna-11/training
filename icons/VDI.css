@@ -1,3 +1,21 @@
+$(document).on('shown.bs.modal', function() {
+    $(document).off('click.dismiss.bs.modal');
+    $('[data-dismiss="modal"]').not('.cancel-btn').hide();
+});
+	---
+	$('.modal').off('click').on('click', function(e) {
+    e.stopPropagation();
+});
+		----
+		$('.modal').data('bs.modal')._config.backdrop = 'static';
+		---
+		$('.modal').modal({ backdrop: 'static', keyboard: false });
+		-----
+
+
+
+		
+
 $(document).on('mousedown', function(e) {
     if (!$(e.target).closest('.modal-content').length) {
         e.stopPropagation();
