@@ -1,3 +1,30 @@
+// Prevent click outside .modal-content from closing
+document.querySelector('.modal').addEventListener('click', function(e) {
+  e.stopPropagation();
+});
+
+// If there's a backdrop/overlay click handler, remove it
+// or add this to your modal-content:
+document.querySelector('.modal-content').addEventListener('click', function(e) {
+  e.stopPropagation();
+});
+
+	  ------
+
+	  // Remove or disable the outside-click listener entirely
+// Find code that looks like this and DELETE it:
+document.querySelector('.modal-backdrop').addEventListener('click', closeModal);
+
+// Or override it:
+window.addEventListener('click', function(e) {
+  if (!e.target.closest('.modal-content')) {
+    e.stopImmediatePropagation(); // Block all other handlers
+  }
+}, true); // 'true' = capture phase, fires before other listeners
+
+	  -----------------------------
+
+
 $(document).ready(function () {
   $(document).on('click', function (e) {
     if ($(e.target).hasClass('modal') && $(e.target).attr('id') === 'cancel_popup_opportunityDetails') {
