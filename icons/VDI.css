@@ -1,3 +1,56 @@
+function bindTimeListNavigation(inputSelector, listSelector) {
+    $(document).on("keydown", inputSelector, function (e) {
+
+        let $list = $(listSelector);
+        if (!$list.is(":visible")) return;
+
+        let $items = $list.find("li:visible");
+        let $active = $items.filter(".active-item");
+        let index = $items.index($active);
+
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            $items.removeClass("active-item");
+
+            let $next = (index + 1 < $items.length)
+                ? $items.eq(index + 1)
+                : $items.first();
+
+            $next.addClass("active-item")
+                 .get(0)
+                 .scrollIntoView({ block: "nearest" });
+        }
+
+        else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            $items.removeClass("active-item");
+
+            let $prev = (index > 0)
+                ? $items.eq(index - 1)
+                : $items.last();
+
+            $prev.addClass("active-item")
+                 .get(0)
+                 .scrollIntoView({ block: "nearest" });
+        }
+
+        else if (e.key === "Enter") {
+            if ($active.length) {
+                e.preventDefault();
+                $active.click();
+                $list.hide();
+            }
+        }
+    });
+}
+
+bindTimeListNavigation(
+    ".custom-dropdown",
+    ".dropdown-list"
+);
+
+	--------------------
+
 document.addEventListener('keydown', function(e) {
   if (e.key === 'ArrowDown') {
     document.querySelector('.dropdown-menu').classList.add('show');
