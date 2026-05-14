@@ -1,4 +1,80 @@
 function bindTimeListNavigation(inputSelector, listSelector) {
+    let usingKeyboard = false;
+
+    $(document).on("keydown", inputSelector, function (e) {
+        let $list = $(this).closest(".custom-dropdown").find(listSelector);
+
+        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+            usingKeyboard = true;
+            $list.find("li").removeClass("hover-active");
+        }
+
+        if ((e.key === "ArrowDown" || e.key === "ArrowUp") && !$list.is(":visible")) {
+            e.preventDefault();
+            $list.show();
+            return;
+        }
+
+        if (!$list.is(":visible")) return;
+        let $items = $list.find("li:visible");
+        let $active = $items.filter(".active-item");
+        let index = $items.index($active);
+
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            $items.removeClass("active-item");
+            let $next = (index + 1 < $items.length)
+                ? $items.eq(index + 1)
+                : $items.first();
+            $next.addClass("active-item")
+                 .get(0)
+                 .scrollIntoView({ block: "nearest" });
+        }
+        else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            $items.removeClass("active-item");
+            let $prev = (index > 0)
+                ? $items.eq(index - 1)
+                : $items.last();
+            $prev.addClass("active-item")
+                 .get(0)
+                 .scrollIntoView({ block: "nearest" });
+        }
+        else if (e.key === "Enter") {
+            if ($active.length) {
+                e.preventDefault();
+                $active.click();
+                $list.hide();
+            }
+        }
+    });
+
+    // ✅ FIX — mouseenter always switches to mouse mode and shows hover
+    $(document).on("mouseenter", listSelector + " li", function () {
+        usingKeyboard = false; // ✅ Switch to mouse mode on hover
+        $(listSelector).find("li").removeClass("active-item"); // Remove keyboard highlight
+        $(listSelector).find("li").removeClass("hover-active"); // Clear other hovers
+        $(this).addClass("hover-active"); // ✅ Show hover on current item
+    });
+
+    $(document).on("mouseleave", listSelector + " li", function () {
+        $(this).removeClass("hover-active");
+    });
+
+    // ✅ Mouse click — always works
+    $(document).on("click", listSelector + " li", function () {
+        $(listSelector).find("li").removeClass("hover-active active-item");
+    });
+}
+
+bindTimeListNavigation(
+    ".custom-dropdown input",
+    ".dropdown-list"
+);
+
+		------------
+
+function bindTimeListNavigation(inputSelector, listSelector) {
     let usingKeyboard = false; // ✅ Track input method
 
     $(document).on("keydown", inputSelector, function (e) {
