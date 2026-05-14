@@ -1,3 +1,60 @@
+function bindTimeListNavigation(inputSelector, listSelector, wrapperSelector) {
+    $(document).on("keydown", inputSelector, function (e) {
+
+        // Scope the list to only the one near the focused input
+        let $list = $(this).closest(wrapperSelector).find(listSelector);
+
+        // Open list if hidden and ArrowDown or ArrowUp is pressed
+        if ((e.key === "ArrowDown" || e.key === "ArrowUp") && !$list.is(":visible")) {
+            e.preventDefault();
+            $list.show();
+            return;
+        }
+
+        if (!$list.is(":visible")) return;
+        let $items = $list.find("li:visible");
+        let $active = $items.filter(".active-item");
+        let index = $items.index($active);
+
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            $items.removeClass("active-item");
+            let $next = (index + 1 < $items.length)
+                ? $items.eq(index + 1)
+                : $items.first();
+            $next.addClass("active-item")
+                 .get(0)
+                 .scrollIntoView({ block: "nearest" });
+        }
+        else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            $items.removeClass("active-item");
+            let $prev = (index > 0)
+                ? $items.eq(index - 1)
+                : $items.last();
+            $prev.addClass("active-item")
+                 .get(0)
+                 .scrollIntoView({ block: "nearest" });
+        }
+        else if (e.key === "Enter") {
+            if ($active.length) {
+                e.preventDefault();
+                $active.click();
+                $list.hide();
+            }
+        }
+    });
+}
+
+// ✅ Pass your actual wrapper class as 3rd argument
+bindTimeListNavigation(
+    ".custom-dropdown",
+    ".dropdown-list",
+    ".time-picker-wrapper"   // ← Replace with your actual parent wrapper class
+);
+
+	------
+
 function bindTimeListNavigation(inputSelector, listSelector) {
     $(document).on("keydown", inputSelector, function (e) {
         let $list = $(listSelector);
