@@ -1,3 +1,29 @@
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowDown') {
+    document.querySelector('.dropdown-menu').classList.add('show');
+    // or
+    document.querySelector('select').size = 5; // for <select>
+  }
+});
+----
+const select = document.querySelector('select');
+const arrow = document.querySelector('.down-arrow');
+
+arrow.addEventListener('click', function() {
+  // Simulate mouse click to open native select
+  const event = new MouseEvent('mousedown');
+  select.dispatchEvent(event);
+  select.focus();
+  select.click();
+});
+	-----
+	// Trigger bootstrap dropdown open on arrow click
+document.querySelector('.down-arrow').addEventListener('click', function() {
+  const dropdown = document.querySelector('.dropdown-toggle');
+  dropdown.click(); // toggles open/close
+});
+	-------------------------
+
 // Prevent click outside .modal-content from closing
 document.querySelector('.modal').addEventListener('click', function(e) {
   e.stopPropagation();
