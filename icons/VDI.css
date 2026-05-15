@@ -1,3 +1,42 @@
+/* Your existing rule - keep as is */
+#time_list endTime li.active-item,
+#time_list startTime li.active-item,
+#time_list li.active-item {
+    background-color: #007AC3;
+    color: #fff;
+    outline: none;
+}
+
+/* Hover ONLY when no active-item exists in the list */
+#time_list_endTime li:not(.active-item):hover,
+#time_list_startTime li:not(.active-item):hover {
+    background-color: #007AC3;
+    color: #fff;
+}
+
+/* When any sibling has active-item, suppress hover on others */
+#time_list_endTime:has(.active-item) li:hover,
+#time_list_startTime:has(.active-item) li:hover {
+    background-color: transparent;
+    color: inherit;
+}
+---
+
+// When mouse enters a list item, clear keyboard active-item and highlight hovered
+$(document).on("mouseenter", "#time_list_endTime li, #time_list_startTime li", function () {
+    let $list = $(this).closest(".dropdown-list");
+    $list.find("li").removeClass("active-item"); // clear keyboard selection
+});
+
+// On mouse click, set active-item to the clicked one
+$(document).on("click", "#time_list_endTime li, #time_list_startTime li", function () {
+    let $list = $(this).closest(".dropdown-list");
+    $list.find("li").removeClass("active-item");
+    $(this).addClass("active-item");
+});
+
+	---
+
 // On page load, reconfigure the modal
 $('#cancel_popup_opportunity2').modal({
   backdrop: 'static',
