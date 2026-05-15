@@ -1,3 +1,11 @@
+// On page load, reconfigure the modal
+$('#cancel_popup_opportunity2').modal({
+  backdrop: 'static',
+  keyboard: false
+});
+
+----
+
 function bindTimeListNavigation(inputSelector, listSelector) {
     let usingKeyboard = false;
 
