@@ -1,3 +1,22 @@
+/* After line 3035 in medicare.css */
+
+/* Hover only when no active-item */
+#time_list_endTime li:not(.active-item):hover,
+#time_list_startTime li:not(.active-item):hover,
+#time_list li:not(.active-item):hover {
+    background-color: #007AC3;
+    color: #fff;
+}
+
+/* Suppress hover when keyboard active-item exists */
+#time_list_endTime:has(.active-item) li:hover,
+#time_list_startTime:has(.active-item) li:hover,
+#time_list:has(.active-item) li:hover {
+    background-color: transparent;
+    color: inherit;
+}
+---
+
 // Replace your existing mouseenter handler with this:
 $(document).on("mouseenter", "#time_list_endTime li, #time_list_startTime li, #time_list li", function () {
     let $list = $(this).closest(".dropdown-list");
