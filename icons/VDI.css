@@ -1,3 +1,22 @@
+// Replace your existing mouseenter handler with this:
+$(document).on("mouseenter", "#time_list_endTime li, #time_list_startTime li, #time_list li", function () {
+    let $list = $(this).closest(".dropdown-list");
+    $list.find("li").removeClass("active-item");
+    $(this).addClass("active-item"); // ← KEY FIX: set active-item on hover too
+});
+
+$(document).on("mouseleave", "#time_list_endTime li, #time_list_startTime li, #time_list li", function () {
+    // Don't remove active-item on mouseleave — let keyboard or next hover do it
+});
+
+// Click handler — add #time_list too
+$(document).on("click", "#time_list_endTime li, #time_list_startTime li, #time_list li", function () {
+    $(this).closest(".dropdown-list").find("li").removeClass("active-item");
+    $(this).addClass("active-item");
+});
+
+-------
+
 /* Your existing rule - keep as is */
 #time_list endTime li.active-item,
 #time_list startTime li.active-item,
