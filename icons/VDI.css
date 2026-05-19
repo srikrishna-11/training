@@ -1,4 +1,43 @@
 document.querySelectorAll('#time_list, #time_list_startTime, #time_list_endTime').forEach(ul => {
+  let isNavigating = false;
+
+  // Reset scroll only when dropdown first opens
+  const observer = new MutationObserver(function () {
+    if (ul.style.display !== 'none') {
+      isNavigating = false;
+      ul.scrollTop = 0;
+    }
+  });
+  observer.observe(ul, { attributes: true, attributeFilter: ['style'] });
+
+  // While navigating with arrow keys, set flag to true
+  ul.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      isNavigating = true;
+    }
+  });
+
+  // Reset only on Enter (confirmed selection), not during navigation
+  ul.addEventListener('keyup', function (e) {
+    if (e.key === 'Enter' && !isNavigating) {
+      setTimeout(() => { ul.scrollTop = 0; }, 0);
+    }
+    if (e.key === 'Enter') {
+      isNavigating = false;
+    }
+  });
+
+  // Reset on mouse click selection
+  ul.addEventListener('click', function (e) {
+    if (e.target.tagName === 'LI') {
+      setTimeout(() => { ul.scrollTop = 0; }, 0);
+    }
+  });
+});
+
+		----
+
+document.querySelectorAll('#time_list, #time_list_startTime, #time_list_endTime').forEach(ul => {
   
   // Reset scroll when dropdown first opens
   const observer = new MutationObserver(function () {
