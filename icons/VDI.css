@@ -3,6 +3,42 @@ document.querySelectorAll('#time_list, #time_list_startTime, #time_list_endTime'
     this.scrollTop = 0;
   });
 
+  el.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      this.scrollTop = 0;
+    }
+  });
+
+  el.addEventListener('keyup', function (e) {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      this.scrollTop = 0;
+    }
+  });
+});
+
+-------
+
+document.querySelectorAll('#time_list, #time_list_startTime, #time_list_endTime').forEach(el => {
+  el.addEventListener('change', function () {
+    this.scrollTop = 0;
+  });
+
+  el.addEventListener('keyup', function (e) {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      setTimeout(() => {
+        this.scrollTop = 0;
+      }, 0);
+    }
+  });
+});
+
+		----
+
+document.querySelectorAll('#time_list, #time_list_startTime, #time_list_endTime').forEach(el => {
+  el.addEventListener('change', function () {
+    this.scrollTop = 0;
+  });
+
   el.addEventListener('click', function () {
     this.scrollTop = 0;
   });
