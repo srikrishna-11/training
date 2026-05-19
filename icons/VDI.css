@@ -1,3 +1,22 @@
+document.querySelectorAll('#time_list, #time_list_startTime, #time_list_endTime').forEach(el => {
+  el.addEventListener('change', function () {
+    this.scrollTop = 0;
+  });
+
+  el.addEventListener('click', function () {
+    this.scrollTop = 0;
+  });
+});
+-----
+
+document.querySelectorAll('#time_list, #time_list_startTime, #time_list_endTime').forEach(el => {
+  el.addEventListener('change', function () {
+    this.scrollTop = 0;
+    const scrollable = this.closest('.scroll-container'); // replace with actual class
+    if (scrollable) scrollable.scrollTop = 0;
+  });
+});
+
 /* After line 3035 in medicare.css */
 
 /* Hover only when no active-item */
