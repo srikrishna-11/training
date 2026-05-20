@@ -1,4 +1,27 @@
 const dp = document.getElementById('appointment_startDate');
+
+// Watch for value changes on the input
+new MutationObserver(() => {
+    if (dp.value.trim()) dp.classList.remove('warningBorder');
+}).observe(dp, { attributes: true, attributeFilter: ['value', 'style'] });
+
+// Also poll as fallback
+setInterval(() => {
+    if (dp.value.trim()) dp.classList.remove('warningBorder');
+}, 200);
+
+dp.addEventListener('blur', () => {
+    if (dp.value.trim()) dp.classList.remove('warningBorder');
+});
+
+document.querySelector('[id*="save"]').addEventListener('click', () => {
+    if (!dp.value.trim()) dp.classList.add('warningBorder');
+});
+
+	-------
+
+
+const dp = document.getElementById('appointment_startDate');
 ['input','change','blur','keyup','keydown','click','focus'].forEach(evt => {
     dp.addEventListener(evt, () => console.log('fired:', evt, 'value:', dp.value));
 });
