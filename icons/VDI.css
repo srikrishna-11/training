@@ -1,6 +1,23 @@
 document.querySelector('[id*="save"]').addEventListener('click', function() {
     const input = document.getElementById('appointment_startDate');
     if (!input.value.trim()) {
+        input.style.setProperty('border', '1px solid red', 'important');
+        input.style.setProperty('border-radius', '4px', 'important');
+    }
+});
+
+document.getElementById('appointment_startDate').addEventListener('change', function() {
+    if (this.value.trim()) {
+        this.style.removeProperty('border');
+        this.style.removeProperty('border-radius');
+    }
+});
+
+		---
+
+document.querySelector('[id*="save"]').addEventListener('click', function() {
+    const input = document.getElementById('appointment_startDate');
+    if (!input.value.trim()) {
         input.style.cssText = 'border: 1px solid #888888 !important;';
     }
 });
