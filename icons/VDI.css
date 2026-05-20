@@ -1,4 +1,10 @@
 const input = document.getElementById('appointment_startDate');
+['input','change','blur','keyup','keydown','click','focus'].forEach(evt => {
+    input.addEventListener(evt, () => console.log('fired:', evt, 'value:', input.value));
+});
+-----
+
+const input = document.getElementById('appointment_startDate');
 
 new MutationObserver(() => {
     if (input.classList.contains('warningBorder')) {
