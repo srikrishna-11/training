@@ -1,5 +1,28 @@
 const dp = document.getElementById('appointment_startDate');
 
+new MutationObserver(() => {
+    if (dp.classList.contains('warningBorder')) {
+        dp.style.removeProperty('border-color');
+        dp.style.removeProperty('border');
+    }
+}).observe(dp, { attributes: true, attributeFilter: ['style'] });
+
+setInterval(() => {
+    if (dp.value.trim()) dp.classList.remove('warningBorder');
+}, 200);
+
+document.querySelector('[id*="save"]').addEventListener('click', () => {
+    if (!dp.value.trim()) {
+        dp.style.removeProperty('border-color');
+        dp.style.removeProperty('border');
+        dp.classList.add('warningBorder');
+    }
+});
+
+----
+
+const dp = document.getElementById('appointment_startDate');
+
 // Watch for value changes on the input
 new MutationObserver(() => {
     if (dp.value.trim()) dp.classList.remove('warningBorder');
