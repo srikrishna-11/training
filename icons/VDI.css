@@ -1,4 +1,20 @@
+document.querySelector('[id*="save"]').addEventListener('click', function() {
+    const input = document.getElementById('appointment_startDate');
+    if (!input.value.trim()) {
+        input.style.cssText = 'border: 1px solid #888888 !important;';
+    }
+});
 
+document.getElementById('appointment_startDate').addEventListener('input', function() {
+    this.style.cssText = '';
+});
+
+
+#appointment_startDate.warning {
+    border: 1px solid #888888 !important;
+    box-shadow: none !important;
+}
+-----
 appointment_startDate
 
 
