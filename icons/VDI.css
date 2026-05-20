@@ -1,3 +1,10 @@
+const dp = document.getElementById('appointment_startDate');
+['input','change','blur','keyup','keydown','click','focus'].forEach(evt => {
+    dp.addEventListener(evt, () => console.log('fired:', evt, 'value:', dp.value));
+});
+
+------
+
 const input = document.getElementById('appointment_startDate');
 ['input','change','blur','keyup','keydown','click','focus'].forEach(evt => {
     input.addEventListener(evt, () => console.log('fired:', evt, 'value:', input.value));
