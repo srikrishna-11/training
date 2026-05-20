@@ -1,3 +1,37 @@
+function initWarningBorder() {
+    const dp = document.getElementById('appointment_startDate');
+    if (!dp || dp._warningInit) return;
+    dp._warningInit = true;
+
+    new MutationObserver(() => {
+        if (dp.classList.contains('warningBorder')) {
+            dp.style.removeProperty('border-color');
+            dp.style.removeProperty('border');
+        }
+    }).observe(dp, { attributes: true, attributeFilter: ['style'] });
+
+    setInterval(() => {
+        if (dp.value.trim()) dp.classList.remove('warningBorder');
+    }, 200);
+
+    const saveBtn = document.querySelector('[id*="save"]');
+    if (saveBtn && !saveBtn._warningInit) {
+        saveBtn._warningInit = true;
+        saveBtn.addEventListener('click', () => {
+            if (!dp.value.trim()) {
+                dp.style.removeProperty('border-color');
+                dp.style.removeProperty('border');
+                dp.classList.add('warningBorder');
+            }
+        });
+    }
+}
+
+// Re-init every time modal opens
+setInterval(initWarningBorder, 500);
+
+-----------
+
 const dp = document.getElementById('appointment_startDate');
 
 new MutationObserver(() => {
