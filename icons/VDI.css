@@ -1,3 +1,19 @@
+const input = document.getElementById('appointment_startDate');
+
+new MutationObserver(() => {
+    if (input.classList.contains('warningBorder')) {
+        input.style.removeProperty('border-color');
+    }
+}).observe(input, { attributes: true, attributeFilter: ['style'] });
+
+document.querySelector('[id*="save"]').addEventListener('click', () => {
+    if (!input.value.trim()) input.classList.add('warningBorder');
+});
+
+input.addEventListener('change', () => input.classList.remove('warningBorder'));
+
+	--
+
 document.querySelector('[id*="save"]').addEventListener('click', function() {
     const input = document.getElementById('appointment_startDate');
     if (!input.value.trim()) {
