@@ -1,4 +1,26 @@
 $(".datepicker").on('show', function () {
+    $(this).data('picker-open', true);  // mark picker as open
+
+    if ($(this).data('prev-val') === undefined) {
+        $(this).data('prev-val', $(this).val());
+    }
+
+    var $this = $(this);
+    setTimeout(function () {
+        var currentVal = $this.val();
+        $this.datepicker('update', '');
+        $this.val(currentVal);
+    }, 0);
+});
+
+$(".datepicker").on('hide', function () {
+    $(this).data('picker-open', false);  // mark picker as closed
+});
+
+-------
+
+
+$(".datepicker").on('show', function () {
     if ($(this).data('prev-val') === undefined) {
         $(this).data('prev-val', $(this).val());
     }
