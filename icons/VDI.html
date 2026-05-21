@@ -1,3 +1,35 @@
+$("#open-drawer-add-appointments").click(function () {
+    $(".requiredFields_heading").show();
+  })
+
+  function validateAppointmentForm() {
+      let hasError = false;
+      const $toast = $("#mandatoryfields_toast_addAppointment");
+      const location = $("#locationField").val();
+      $toast.hide();
+      $("#is-invalid").hide().text("");
+
+      function check(field, warning) {
+          const val = $(field).val();
+          if (!val || val.trim() === "" || val === "Select") {
+              $(warning).show();
+              $(field).addClass('warningBorder');
+              hasError = true;
+          } else {
+              $(warning).hide();
+              $(field).removeClass('warningBorder');
+              if (field == '#manual-startTimes' || field == '#manual-endTimes') {
+                  if (Number.isNaN(timeToMinutes(val))) {
+                      $(field).addClass('warningBorder');
+                      // hasError = true;
+                  }
+              }
+          }
+      }
+
+------
+
+
 $(".datepicker").on('show', function () {
     $(this).data('prev-val', $(this).val());
 });
