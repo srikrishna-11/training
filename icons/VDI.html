@@ -1,3 +1,29 @@
+function check(field, warning) {
+    const val = $(field).val();
+    if (!val || val.trim() === "" || val === "Select") {
+        $(warning).show();
+        $(field).addClass('warningBorder');
+        // Force override the datepicker's inline !important style
+        const warningColor = getComputedStyle($(field)[0]).getPropertyValue('border-color');
+        $(field)[0].style.setProperty('border-color', warningColor, 'important');
+        hasError = true;
+    } else {
+        $(warning).hide();
+        $(field).removeClass('warningBorder');
+        // Clear the forced inline override when valid
+        $(field)[0].style.removeProperty('border-color');
+        if (field == '#manual-startTimes' || field == '#manual-endTimes') {
+            if (Number.isNaN(timeToMinutes(val))) {
+                $(field).addClass('warningBorder');
+                const warningColor = getComputedStyle($(field)[0]).getPropertyValue('border-color');
+                $(field)[0].style.setProperty('border-color', warningColor, 'important');
+            }
+        }
+    }
+}
+
+-----
+
 $("#open-drawer-add-appointments").click(function () {
     $(".requiredFields_heading").show();
   })
