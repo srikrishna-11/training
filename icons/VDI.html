@@ -1,4 +1,20 @@
 $(".datepicker").on('show', function () {
+    if ($(this).data('prev-val') === undefined) {
+        $(this).data('prev-val', $(this).val());
+    }
+
+    // Just remove the visual highlight via CSS without touching the value
+    $(this).data('picker-open', true);
+    $('.datepicker-days td.active').removeClass('active');
+});
+
+$(".datepicker").on('hide', function () {
+    $(this).data('picker-open', false);
+});
+
+---
+
+$(".datepicker").on('show', function () {
     $(this).data('picker-open', true);  // mark picker as open
 
     if ($(this).data('prev-val') === undefined) {
