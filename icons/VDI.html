@@ -1,3 +1,15 @@
+$(".datepicker").on('show', function () {
+    $(this).data('prev-val', $(this).val());
+});
+
+$("#cancelBtn").on('click', function () {
+    $('.datepicker').each(function () {
+        var prev = $(this).data('prev-val') || '';
+        $(this).val(prev);
+        $(this).datepicker('update', prev);
+    });
+});
+
 $(".datepicker").on('hide', function () {
     // If input is empty, ensure no date is selected internally
     if ($(this).val() === '') {
