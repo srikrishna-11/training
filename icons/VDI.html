@@ -1,3 +1,18 @@
+$(".datepicker").on('show', function () {
+    // Only store prev-val if it hasn't been set yet
+    if ($(this).data('prev-val') === undefined) {
+        $(this).data('prev-val', $(this).val());
+    }
+
+    // Clear the internal selected date so no blue highlight shows on reopen
+    // but keep the input value as-is
+    var currentVal = $(this).val();
+    $(this).datepicker('clearDates');
+    $(this).val(currentVal);
+});
+
+---
+
 $(".save_btn_add_appointment").on('click', function () {
     $('.datepicker').each(function () {
         // Commit current value as the new baseline
