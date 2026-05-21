@@ -1,4 +1,20 @@
 $(".datepicker").on('show', function () {
+    if ($(this).data('prev-val') === undefined) {
+        $(this).data('prev-val', $(this).val());
+    }
+
+    // Use timeout to let the picker fully open first, then remove highlight
+    var $this = $(this);
+    setTimeout(function () {
+        var currentVal = $this.val();
+        $this.datepicker('update', '');
+        $this.val(currentVal);
+    }, 0);
+});
+
+--------
+
+$(".datepicker").on('show', function () {
     // Only store prev-val if it hasn't been set yet
     if ($(this).data('prev-val') === undefined) {
         $(this).data('prev-val', $(this).val());
