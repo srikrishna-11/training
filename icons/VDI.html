@@ -1,3 +1,12 @@
+$(".datepicker").on('hide', function () {
+    // If input is empty, ensure no date is selected internally
+    if ($(this).val() === '') {
+        $(this).datepicker('clearDates');
+    }
+});
+
+---
+
 $('#appointment_closeDate').datepicker({
  startDate: new Date(),
         endDate: '+100y',
