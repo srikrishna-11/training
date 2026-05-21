@@ -1,3 +1,31 @@
+$(".save_btn_add_appointment").on('click', function () {
+    $('.datepicker').each(function () {
+        // Commit current value as the new baseline
+        $(this).removeData('prev-val');
+    });
+});
+----
+
+$(".datepicker").on('show', function () {
+    // Only store prev-val if it hasn't been set yet (i.e., first open in this session)
+    if ($(this).data('prev-val') === undefined) {
+        $(this).data('prev-val', $(this).val());
+    }
+});
+
+$(".cancel_btn_add_appointment").on('click', function () {
+    $('.datepicker').each(function () {
+        var prev = $(this).data('prev-val') || '';
+        $(this).val(prev);
+        $(this).datepicker('update', prev);
+        // Reset prev-val so next open stores fresh value
+        $(this).removeData('prev-val');
+    });
+});
+
+
+----
+
 function check(field, warning) {
     const val = $(field).val();
     if (!val || val.trim() === "" || val === "Select") {
