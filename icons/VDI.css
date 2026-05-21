@@ -1,3 +1,37 @@
+(function () {
+  const observers = new Map();
+
+  function forceWarning(el) {
+    el.classList.add('warningBorder');
+    if (observers.has(el)) return;
+    const obs = new MutationObserver(() => {
+      requestAnimationFrame(() => el.classList.add('warningBorder'));
+    });
+    obs.observe(el, { attributes: true, attributeFilter: ['class'] });
+    observers.set(el, obs);
+  }
+
+  function clearWarning(el) {
+    el.classList.remove('warningBorder');
+    observers.get(el)?.disconnect();
+    observers.delete(el);
+  }
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.save-btn, button.save')) return; // ← adjust selector
+
+    document.querySelectorAll('input.mandatory_editableFields').forEach((field) => {
+      if (!field.value.trim()) {
+        forceWarning(field);
+        field.addEventListener('change', () => clearWarning(field), { once: true });
+      }
+    });
+  }, true);
+})();
+
+	--------
+
+
 function initWarningBorder() {
     const dp = document.getElementById('appointment_startDate');
     if (!dp || dp._warningInit) return;
