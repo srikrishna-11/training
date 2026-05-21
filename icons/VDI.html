@@ -1,3 +1,32 @@
+
+$(".cancel_btn_add_appointment").on('click', function () {
+    // Immediately hide all warnings when cancel is clicked
+    $('.warning_text').hide();
+    $('#is-invalid').hide();
+    
+    $('.warningBorder').each(function () {
+        $(this).removeClass('warningBorder');
+        $(this)[0].style.removeProperty('border-color');
+    });
+
+    $('.datepicker').each(function () {
+        $(this).data('picker-open', true);
+    });
+
+    $('.datepicker').each(function () {
+        var prev = $(this).data('prev-val') || '';
+        $(this).val(prev);
+        $(this).datepicker('update', prev);
+        $(this).removeData('prev-val');
+    });
+
+    setTimeout(function () {
+        $('.datepicker').data('picker-open', false);
+    }, 100);
+});
+
+----
+
 $(".cancel_btn_add_appointment").on('click', function () {
     // Hide all warnings before restoring values
     $('[class*="warning"]').hide();
