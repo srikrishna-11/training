@@ -1,3 +1,33 @@
+
+
+$(".datepicker").on('show', function () {
+    if ($(this).data('prev-val') === undefined) {
+        $(this).data('prev-val', $(this).val());
+    }
+    $('.datepicker-days td.active').removeClass('active');
+});
+
+$(".datepicker").on('hide', function () {
+    $(this).data('picker-open', false);
+});
+
+$(".cancel_btn_add_appointment").on('click', function () {
+    $('.datepicker').each(function () {
+        var prev = $(this).data('prev-val') || '';
+        $(this).val(prev);                                    // silent reset
+        $('.datepicker-days td.active').removeClass('active'); // clear highlight
+        $(this).removeData('prev-val');
+    });
+});
+
+$(".save_btn_add_appointment").on('click', function () {
+    $('.datepicker').each(function () {
+        $(this).removeData('prev-val');
+    });
+});
+
+----
+
 $(".datepicker").off('show').off('hide');
 $(".cancel_btn_add_appointment").off('click');
 $(".save_btn_add_appointment").off('click');
