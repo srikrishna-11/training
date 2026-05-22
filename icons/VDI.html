@@ -6,6 +6,32 @@ function resetDateHighlight() {
     if (input) input.value = '';
 }
 
+document.querySelector('.save_btn_add_appointment').addEventListener('click', resetDateHighlight);
+document.querySelector('.cancel_btn_add_appointment').addEventListener('click', resetDateHighlight);
+
+--
+
+function resetDateHighlight() {
+    document.querySelectorAll('td.active.day').forEach(function(td) {
+        td.classList.remove('active');
+    });
+    var input = document.getElementById('appointment_startDate');
+    if (input) input.value = '';
+}
+
+document.querySelector('.save_btn_add_appointment').addEventListener('click', resetDateHighlight, true);
+document.querySelector('.cancel_btn_add_appointment').addEventListener('click', resetDateHighlight, true);
+
+----
+
+function resetDateHighlight() {
+    document.querySelectorAll('td.active.day').forEach(function(td) {
+        td.classList.remove('active');
+    });
+    var input = document.getElementById('appointment_startDate');
+    if (input) input.value = '';
+}
+
 document.body.addEventListener('click', function(e) {
     if (
         e.target.closest('.save_btn_add_appointment') ||
