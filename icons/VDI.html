@@ -1,3 +1,16 @@
+$(".cancel_btn_add_appointment").on('click', function () {
+    setTimeout(function() {
+        document.querySelectorAll('[class*="error"], [class*="warning"], [class*="mandatory"]').forEach(function(el) {
+            if (el.offsetParent !== null) {
+                console.log('VISIBLE:', el.className, '|', el.textContent.trim());
+            }
+        });
+    }, 300);
+});
+
+----
+
+
 $(".datepicker").off('show').off('hide');
 $(".cancel_btn_add_appointment").off('click');
 $(".save_btn_add_appointment").off('click');
