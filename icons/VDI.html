@@ -1,3 +1,21 @@
+document.querySelectorAll('td').forEach(function(td) {
+    if (td.textContent.trim() === '29') {
+        console.log(td.className, td);
+    }
+});
+
+----
+
+document.querySelectorAll('button, input[type="button"], input[type="submit"], a').forEach(function(el) {
+    if (el.textContent.toLowerCase().includes('cancel') || 
+        el.textContent.toLowerCase().includes('save') ||
+        el.textContent.toLowerCase().includes('close')) {
+        console.log(el.textContent.trim(), el.className, el);
+    }
+});
+
+---
+
 function resetDateHighlight() {
     var input = document.getElementById('appointment_startDate');
     if (input) input.value = '';
