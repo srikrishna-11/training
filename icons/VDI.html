@@ -1,3 +1,52 @@
+$(".datepicker").off('show').off('hide');
+$(".cancel_btn_add_appointment").off('click');
+$(".save_btn_add_appointment").off('click');
+
+$(".datepicker").on('show', function () {
+    if ($(this).data('prev-val') === undefined) {
+        $(this).data('prev-val', $(this).val());
+    }
+    $('.datepicker-days td.active').removeClass('active');
+});
+
+$(".datepicker").on('hide', function () {
+    $(this).data('picker-open', false);
+});
+
+$(".cancel_btn_add_appointment").on('click', function () {
+    $('.datepicker').each(function () {
+        var prev = $(this).data('prev-val') || '';
+        
+        // Update value silently without triggering validation
+        $(this).val(prev);
+        $(this).datepicker('update', prev);
+        
+        // Remove validation warning classes
+        $(this).removeClass('mandatory_error error invalid');
+        $(this).closest('dl, div, .form-group').find('.error-msg, .warning, .mandatory-error, span.error').hide();
+        $(this).closest('dl, div, .form-group').removeClass('has-error error');
+        
+        $(this).removeData('prev-val');
+    });
+});
+
+$(".save_btn_add_appointment").on('click', function () {
+    $('.datepicker').each(function () {
+        $(this).removeData('prev-val');
+    });
+});
+
+---
+
+// After clicking cancel, run this:
+document.querySelectorAll('[class*="error"], [class*="warning"], [class*="invalid"]').forEach(function(el) {
+    if (el.offsetParent !== null) { // only visible elements
+        console.log(el.className, el.textContent.trim());
+    }
+});
+
+---
+
 $(".datepicker").on('show', function () {
     // Only store prev-val if it hasn't been set yet (i.e., first open in this session)
     if ($(this).data('prev-val') === undefined) {
