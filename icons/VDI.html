@@ -1,3 +1,18 @@
+document.querySelector('.cancel_btn_add_appointment').addEventListener('click', function() {
+    console.log('CANCEL CLICKED');
+}, true);
+
+--
+
+// Open the datepicker first, select a date, THEN paste this:
+document.querySelectorAll('td').forEach(function(td) {
+    if (td.classList.contains('active')) {
+        console.log('Found active td:', td.className);
+    }
+});
+
+--
+
 function resetDateHighlight() {
     document.querySelectorAll('td.active.day').forEach(function(td) {
         td.classList.remove('active');
