@@ -1,3 +1,25 @@
+function resetDateHighlight() {
+    var input = document.getElementById('appointment_startDate');
+    if (input) input.value = '';
+    
+    document.querySelectorAll(
+        '.dp-selected, .dp-current, [class*="selected"], [class*="dp-sel"]'
+    ).forEach(function(el) {
+        el.className = el.className
+            .replace(/\bdp-selected\b/g, '')
+            .replace(/\bdp-current\b/g, '');
+    });
+}
+
+// Hook into ALL close/cancel/save buttons automatically
+document.querySelectorAll(
+    '[class*="cancel"], [class*="close"], [class*="save"], [class*="submit"]'
+).forEach(function(btn) {
+    btn.addEventListener('click', resetDateHighlight);
+});
+
+------
+
 $(".cancel_btn_add_appointment").on('click', function () {
     $('.warning_text, #is-invalid').hide();
     $('.warningBorder').removeClass('warningBorder').each(function () {
