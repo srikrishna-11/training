@@ -1,3 +1,35 @@
+function resetDateHighlight() {
+    setTimeout(function() {
+        document.querySelectorAll('td.active.day').forEach(function(td) {
+            td.classList.remove('active');
+        });
+        var input = document.getElementById('appointment_startDate');
+        if (input) input.value = '';
+    }, 100);
+}
+
+document.querySelector('.save_btn_add_appointment').addEventListener('click', resetDateHighlight, true);
+document.querySelector('.cancel_btn_add_appointment').addEventListener('click', resetDateHighlight, true);
+
+---
+
+document.addEventListener('DOMContentLoaded', function() {
+    function resetDateHighlight() {
+        setTimeout(function() {
+            document.querySelectorAll('td.active.day').forEach(function(td) {
+                td.classList.remove('active');
+            });
+            var input = document.getElementById('appointment_startDate');
+            if (input) input.value = '';
+        }, 100);
+    }
+
+    document.querySelector('.save_btn_add_appointment').addEventListener('click', resetDateHighlight, true);
+    document.querySelector('.cancel_btn_add_appointment').addEventListener('click', resetDateHighlight, true);
+});
+
+-----
+
 document.querySelector('.cancel_btn_add_appointment').addEventListener('click', function() {
     console.log('CANCEL CLICKED');
 }, true);
