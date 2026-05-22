@@ -1,3 +1,47 @@
+function resetDateHighlight() {
+    document.querySelectorAll('td.active.day').forEach(function(td) {
+        td.classList.remove('active');
+    });
+    var input = document.getElementById('appointment_startDate');
+    if (input) input.value = '';
+}
+
+document.getElementById('savebtn_opportunityDetails')
+    .addEventListener('click', resetDateHighlight);
+
+document.getElementById('cancelBtn_opportunityDetails')
+    .addEventListener('click', resetDateHighlight);
+
+document.getElementById('cancel_btn_log_activity') 
+    // note: use the exact class name below if no id
+document.querySelector('.cancel_btn_log_activity')
+    .addEventListener('click', resetDateHighlight);
+
+------
+
+function resetDateHighlight() {
+    document.querySelectorAll('td.active.day').forEach(function(td) {
+        td.classList.remove('active');
+    });
+    var input = document.getElementById('appointment_startDate');
+    if (input) input.value = '';
+}
+
+['savebtn_opportunityDetails', 'cancelBtn_opportunityDetails'].forEach(function(id) {
+    var btn = document.getElementById(id);
+    if (btn) btn.addEventListener('click', resetDateHighlight);
+});
+
+document.querySelectorAll('.save_btn_log_activity, .cancel_btn_log_activity').forEach(function(btn) {
+    btn.addEventListener('click', resetDateHighlight);
+});
+
+-------
+
+document.addEventListener('DOMContentLoaded', function() {
+    // paste the code here
+});
+
 document.querySelectorAll('td').forEach(function(td) {
     if (td.textContent.trim() === '29') {
         console.log(td.className, td);
