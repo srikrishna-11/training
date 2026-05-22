@@ -1,3 +1,50 @@
+$(".datepicker").off('show').off('hide');
+$(".cancel_btn_add_appointment").off('click');
+$(".save_btn_add_appointment").off('click');
+
+$(".datepicker").on('show', function () {
+    if ($(this).data('prev-val') === undefined) {
+        $(this).data('prev-val', $(this).val());
+    }
+    $('.datepicker-days td.active').removeClass('active');
+});
+
+$(".datepicker").on('hide', function () {
+    $(this).data('picker-open', false);
+});
+
+$(".cancel_btn_add_appointment").on('click', function () {
+    $('.datepicker').each(function () {
+        var prev = $(this).data('prev-val') || '';
+        
+        // Set value silently WITHOUT calling datepicker('update') 
+        // to avoid triggering mandatory validation
+        $(this).val(prev);
+        
+        // Forcefully hide all mandatory_appointment warning elements
+        $('.mandatory_appointment').hide().css('visibility', 'hidden');
+        
+        // Remove error states from datepicker field
+        $(this).removeClass('error invalid mandatory_error');
+        $(this).closest('dl, .form-group, div').removeClass('has-error error');
+        
+        $(this).removeData('prev-val');
+    });
+    
+    // Extra safety — hide warnings after a short delay too
+    setTimeout(function() {
+        $('.mandatory_appointment').hide().css('visibility', 'hidden');
+    }, 200);
+});
+
+$(".save_btn_add_appointment").on('click', function () {
+    $('.datepicker').each(function () {
+        $(this).removeData('prev-val');
+    });
+});
+
+---
+
 $(".cancel_btn_add_appointment").on('click', function () {
     setTimeout(function() {
         document.querySelectorAll('[class*="error"], [class*="warning"], [class*="mandatory"]').forEach(function(el) {
