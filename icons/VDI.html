@@ -1,4 +1,39 @@
+// Check current viewDate state
+$('.dp-closeDate-dd').data('datepicker').viewDate
+// If this shows August 2026 after closing — confirmed bug location
 
+----
+
+// After save or cancel, reset the datepicker's view to today
+$('#yourDatepickerInput').datepicker('update', '');        // clear value
+$('#yourDatepickerInput').datepicker('setStartDate', new Date()); // optional
+// Force view back to current month
+$('#yourDatepickerInput').datepicker('setValue', new Date()); 
+$('#yourDatepickerInput').datepicker('update', '');        // clear again
+
+---
+function resetDatepicker() {
+  const dp = $('#yourDatepickerInput').data('datepicker');
+  dp.viewDate = new Date();   // 
+  dp.date = null;             // clear selected date
+  dp.fill();                  // re-render
+  $('#yourDatepickerInput').val(''); // clear input text
+}
+
+---
+
+// When the appointment modal opens
+$('#appointmentModal').on('show.bs.modal', function () {
+  $('#yourDatepickerInput')
+    .datepicker('destroy')
+    .datepicker({
+      format: 'mm/dd/yyyy',
+      startDate: new Date(),   // optional: prevent past dates
+      autoclose: true
+    });
+});
+
+---
 
 $(".datepicker").on('show', function () {
     if ($(this).data('prev-val') === undefined) {
