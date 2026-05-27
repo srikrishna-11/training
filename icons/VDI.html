@@ -8,6 +8,68 @@ $('#appointment_closeDate').datepicker({
     autoclose: true,
     todayHighlight: true,
 }).on('show', function() {
+    // Only reset if datepicker is freshly opened (not navigating)
+    if (!$(this).data('dp-navigating')) {
+        var dp = $(this).data('datepicker');
+        if (dp) {
+            var today = new Date();
+            dp.viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+            dp.fill();
+        }
+    }
+    $(this).data('dp-navigating', false);
+}).on('changeMonth changeYear', function() {
+    // Mark as navigating so show doesn't reset it
+    $(this).data('dp-navigating', true);
+}).on('hide', function() {
+    // Clear flag when closed
+    $(this).data('dp-navigating', false);
+});
+
+$('#appointment_startDate').datepicker({
+    startDate: new Date(),
+    endDate: '+100y',
+    dateFormat: "mm/dd/yy",
+    autoclose: true,
+    todayHighlight: true,
+}).on('show', function() {
+    if (!$(this).data('dp-navigating')) {
+        var dp = $(this).data('datepicker');
+        if (dp) {
+            var today = new Date();
+            dp.viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+            dp.fill();
+        }
+    }
+    $(this).data('dp-navigating', false);
+}).on('changeMonth changeYear', function() {
+    $(this).data('dp-navigating', true);
+}).on('hide', function() {
+    $(this).data('dp-navigating', false);
+});
+
+$(".datepicker").on("keydown", function(e) {
+    if (e.keyCode !== 9) {
+        e.preventDefault();
+    }
+});
+
+$(".datepicker").on('focus', function () {
+    $(this).attr("autocomplete", "off");
+});
+
+--
+
+$("#mandatoryfields_toast_addAppointment").hide();
+
+/*Datepicker*/
+$('#appointment_closeDate').datepicker({
+    startDate: new Date(),
+    endDate: '+100y',
+    dateFormat: "mm/dd/yy",
+    autoclose: true,
+    todayHighlight: true,
+}).on('show', function() {
     var dp = $(this).data('datepicker');
     if (dp) {
         var today = new Date();
