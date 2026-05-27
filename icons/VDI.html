@@ -1,3 +1,43 @@
+var $input = $('[class*="dp-closeDate"]').first();
+var dp = $input.data('datepicker');
+if (dp) {
+  var t = new Date();
+  dp.viewDate = new Date(t.getFullYear(), t.getMonth(), 1);
+  dp.update();
+  console.log('✅ Reset to:', t.getMonth()+1, t.getFullYear());
+} else {
+  console.log('❌ No datepicker found on element');
+}
+
+--
+
+// Place this in your page's <head> or before </body>
+// NO $(document).ready() wrapper — keeps function globally accessible
+
+function resetDatepickerView($input) {
+  var dpData = $input.data('datepicker');
+  if (dpData) {
+    var today = new Date();
+    dpData.viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+    dpData.update();
+  }
+}
+
+// Attach listeners after DOM is ready
+$(document).on('show.bs.datepicker show', '.datepicker', function () {
+  var $input = $(this)
+    .siblings('input')
+    .add($(this).closest('.date').find('input'))
+    .first();
+  resetDatepickerView($input);
+});
+
+$(document).on('focus click', '[class*="dp-closeDate"], [class*="datepicker"]', function () {
+  resetDatepickerView($(this));
+});
+
+  ---
+
 // ===== DATEPICKER MONTH RESET FIX =====
 // Targets: dp-closeDate-dd (and any other datepicker fields)
 
