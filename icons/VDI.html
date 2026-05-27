@@ -8,6 +8,78 @@ $('#appointment_closeDate').datepicker({
     autoclose: true,
     todayHighlight: true,
 }).on('show', function() {
+    var $input = $(this);
+    // Only reset on fresh open, not when already open and navigating
+    if (!$input.data('dp-opened')) {
+        var dp = $input.data('datepicker');
+        if (dp) {
+            var today = new Date();
+            dp.viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+            dp.fill();
+        }
+        $input.data('dp-opened', true);
+
+        // Bind arrow clicks ONCE after calendar renders
+        setTimeout(function() {
+            $('.datepicker').find('.prev, .next').off('click.dpfix').on('click.dpfix', function() {
+                $input.data('dp-opened', true); // keep flag true while navigating
+            });
+        }, 50);
+    }
+}).on('hide', function() {
+    // Reset flag only on actual close
+    $(this).data('dp-opened', false);
+});
+
+$('#appointment_startDate').datepicker({
+    startDate: new Date(),
+    endDate: '+100y',
+    dateFormat: "mm/dd/yy",
+    autoclose: true,
+    todayHighlight: true,
+}).on('show', function() {
+    var $input = $(this);
+    if (!$input.data('dp-opened')) {
+        var dp = $input.data('datepicker');
+        if (dp) {
+            var today = new Date();
+            dp.viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+            dp.fill();
+        }
+        $input.data('dp-opened', true);
+
+        setTimeout(function() {
+            $('.datepicker').find('.prev, .next').off('click.dpfix').on('click.dpfix', function() {
+                $input.data('dp-opened', true);
+            });
+        }, 50);
+    }
+}).on('hide', function() {
+    $(this).data('dp-opened', false);
+});
+
+$(".datepicker").on("keydown", function(e) {
+    if (e.keyCode !== 9) {
+        e.preventDefault();
+    }
+});
+
+$(".datepicker").on('focus', function () {
+    $(this).attr("autocomplete", "off");
+});
+
+---
+
+$("#mandatoryfields_toast_addAppointment").hide();
+
+/*Datepicker*/
+$('#appointment_closeDate').datepicker({
+    startDate: new Date(),
+    endDate: '+100y',
+    dateFormat: "mm/dd/yy",
+    autoclose: true,
+    todayHighlight: true,
+}).on('show', function() {
     // Only reset if datepicker is freshly opened (not navigating)
     if (!$(this).data('dp-navigating')) {
         var dp = $(this).data('datepicker');
