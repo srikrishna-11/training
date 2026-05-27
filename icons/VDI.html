@@ -1,3 +1,60 @@
+window.resetDatepickerView = function(el) {
+  var dp = $(el).data('datepicker');
+  if (dp) { var t = new Date(); dp.viewDate = new Date(t.getFullYear(), t.getMonth(), 1); dp.fill(); }
+};
+---
+
+// STEP 1: Define globally IMMEDIATELY (no document.ready wrapper)
+window.resetDatepickerView = function(inputEl) {
+  var $input = inputEl ? $(inputEl) : $(this);
+  var dpData = $input.data('datepicker');
+  if (dpData) {
+    var today = new Date();
+    dpData.viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+    dpData.fill(); // use fill() instead of update() to force re-render
+  }
+};
+
+// STEP 2: Also intercept via delegation after DOM ready
+$(function() {
+
+  // Intercept every time the datepicker dropdown becomes visible
+  $(document).on('show', '.datepicker', function() {
+    var $dp = $(this);
+
+    // Find the related input field
+    var $input = $dp.data('datepicker')
+      ? { data: function(k) { return $dp.data(k); } }
+      : null;
+
+    // Try all possible parent/sibling patterns
+    var $realInput = $dp.prevAll('input').first();
+    if (!$realInput.length) $realInput = $dp.closest('.date, .input-group').find('input').first();
+    if (!$realInput.length) $realInput = $dp.siblings('input').first();
+
+    if ($realInput.length) {
+      var dp = $realInput.data('datepicker');
+      if (dp) {
+        var today = new Date();
+        dp.viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        dp.fill();
+      }
+    }
+  });
+
+  // Also catch focus on the input itself
+  $(document).on('focus', 'input[class*="dp-"], input[class*="date"], .hasDatepicker', function() {
+    var dp = $(this).data('datepicker');
+    if (dp) {
+      var today = new Date();
+      dp.viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+    }
+  });
+
+});
+
+----
+
 var $input = $('[class*="dp-closeDate"]').first();
 var dp = $input.data('datepicker');
 if (dp) {
