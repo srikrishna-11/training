@@ -1,3 +1,77 @@
+// ===== DATEPICKER MONTH RESET FIX =====
+// Targets: dp-closeDate-dd (and any other datepicker fields)
+
+$(document).ready(function () {
+
+  // --- Helper: reset any datepicker's VIEW to today's month ---
+  function resetDatepickerView($input) {
+    var dpData = $input.data('datepicker');
+    if (dpData) {
+      var today = new Date();
+      // Reset the internal viewDate so the calendar opens on current month
+      dpData.viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+      dpData.update(); // re-render
+    }
+  }
+
+  // --- Approach 1: Bootstrap Datepicker event (most reliable) ---
+  $(document).on('show', '.datepicker', function (e) {
+    // Walk up to find the associated input
+    var $dropdown = $(this);
+    var $input = $dropdown.siblings('input, [data-provide="datepicker"]')
+                          .add($dropdown.closest('.date').find('input'))
+                          .first();
+    resetDatepickerView($input);
+  });
+
+  // --- Approach 2: Hook into the dp-closeDate-dd input directly ---
+  $(document).on('focus click', 'input[class*="dp-closeDate"], .dp-closeDate-dd', function () {
+    resetDatepickerView($(this));
+  });
+
+  // --- Approach 3: After Save/Cancel — reset ALL datepickers on page ---
+  $(document).on('click', '.dp-closeDate-dd ~ * button, [class*="datepicker"] button', function () {
+    $('[data-provide="datepicker"], .hasDatepicker, input[class*="dp-closeDate"]').each(function () {
+      resetDatepickerView($(this));
+    });
+  });
+
+  // --- Approach 4: Global override on ALL datepicker instances ---
+  // Runs once after page load — patches every initialized datepicker
+  setTimeout(function () {
+    $('[data-provide="datepicker"], .hasDatepicker').each(function () {
+      var $input = $(this);
+      $input.on('show', function () {
+        var dpData = $input.data('datepicker');
+        if (dpData) {
+          var today = new Date();
+          dpData.viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+          dpData.update();
+        }
+      });
+    });
+  }, 500);
+
+});
+
+----
+
+$('.dp-closeDate-dd, [data-provide="datepicker"]').datepicker({
+  format: 'mm/dd/yyyy',
+  autoclose: true,
+  todayHighlight: true,
+  // This alone won't fix month view — use the event below:
+}).on('show', function () {
+  var dp = $(this).data('datepicker');
+  if (dp) {
+    var t = new Date();
+    dp.viewDate = new Date(t.getFullYear(), t.getMonth(), 1);
+    dp.update();
+  }
+});
+
+----
+
 // Check current viewDate state
 $('.dp-closeDate-dd').data('datepicker').viewDate
 // If this shows August 2026 after closing — confirmed bug location
