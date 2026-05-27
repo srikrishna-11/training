@@ -1,4 +1,50 @@
 $("#mandatoryfields_toast_addAppointment").hide();
+
+/*Datepicker*/
+$('#appointment_closeDate').datepicker({
+    startDate: new Date(),
+    endDate: '+100y',
+    dateFormat: "mm/dd/yy",
+    autoclose: true,
+    todayHighlight: true,
+}).on('show', function() {
+    var dp = $(this).data('datepicker');
+    if (dp) {
+        var today = new Date();
+        dp.viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        dp.fill();
+    }
+});
+
+$('#appointment_startDate').datepicker({
+    startDate: new Date(),
+    endDate: '+100y',
+    dateFormat: "mm/dd/yy",
+    autoclose: true,
+    todayHighlight: true,
+}).on('show', function() {
+    var dp = $(this).data('datepicker');
+    if (dp) {
+        var today = new Date();
+        dp.viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        dp.fill();
+    }
+});
+
+$(".datepicker").on("keydown", function(e) {
+    // Allow Tab (9) so users can still navigate the form
+    if (e.keyCode !== 9) {
+        e.preventDefault();
+    }
+});
+
+$(".datepicker").on('focus', function () {
+    $(this).attr("autocomplete", "off");
+});
+
+---
+
+$("#mandatoryfields_toast_addAppointment").hide();
 /*Datepicker*/
 $('#appointment_closeDate').datepicker({
  startDate: new Date(),
